@@ -53,25 +53,6 @@ const AdminAppsPage = () => {
       const response = await handleGetRequest("/apps?series=true");
       setAppGraphData(response.data.data.graph_data);
       setAppTotal(response.data.data.metadata.total_apps);
-      //not sure what this was for but it doesn't seem relevant
-      // if (response.data.data.graph_data > 0) {
-      //   //const totalNumberOfApps = response.data.data.pagination.total;
-      //   handleGetRequest(`/apps?per_page=10`)
-      //     .then((response) => {
-      //       if (response.data.data.apps.length > 0) {
-      //         setApps(response.data.data.apps);
-      //         setLoading(false);
-
-      //       } else {
-      //         throw new Error("No Apps found");
-      //       }
-      //     })
-      //     .catch(() => {
-      //       setFeedback("Failed to fetch all apps, please try again");
-      //     });
-      // } else {
-      //   setFeedback("No Apps found");
-      // }
     } catch (error) {
       setFeedback("Failed to fetch Apps metrics");
     } finally {
@@ -96,7 +77,6 @@ const AdminAppsPage = () => {
   );
 
   const searchThroughAccounts = (keyword) => {
-    // use api
     handleChangePage(1);
     gettingApps(1, keyword);
   };
@@ -119,10 +99,7 @@ const AdminAppsPage = () => {
     gettingApps();
   };
 
-  // calling the filterGraphData() to filter basing on period
   filteredGraphData = filterGraphData(appGraphData, period);
-
-  console.log("filtered", filterGraphData);
 
   return (
     <div className="APage">
