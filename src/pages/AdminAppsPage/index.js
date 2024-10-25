@@ -6,7 +6,15 @@ import Header from "../../components/Header";
 import InformationBar from "../../components/InformationBar";
 import { handleGetRequest } from "../../apis/apis.js";
 import Select from "../../components/Select";
-import { Line, CartesianGrid, XAxis, YAxis, AreaChart, Area } from "recharts";
+import {
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  AreaChart,
+  Area,
+  Tooltip,
+} from "recharts";
 import NewResourceCard from "../../components/NewResourceCard";
 import "./AdminAppsPage.css";
 import { ReactComponent as SearchButton } from "../../assets/images/search.svg";
@@ -16,11 +24,13 @@ import Spinner from "../../components/Spinner";
 import AppFooter from "../../components/appFooter";
 import { ReactComponent as BackButton } from "../../assets/images/arrow-left.svg";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { filterGraphData } from "../../helpers/filterGraphData.js";
+import { retrieveMonthNames } from "../../helpers/monthNames.js";
 
 const AdminAppsPage = () => {
   // const [apps, setApps] = useState([]);
   const [appTotal, setAppTotal] = useState([]);
-  const [pagination, setPagination] = useState([]);
+  const [appGraphData, setAppGraphData] = useState([]);
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
   const [period, setPeriod] = useState("all");
@@ -29,6 +39,8 @@ const AdminAppsPage = () => {
   const [word, setWord] = useState("");
   const [currentPage, handleChangePage] = usePaginator();
   const dispatch = useDispatch();
+
+  let filteredGraphData = [];
 
   useEffect(() => {
     getAllApps();
@@ -39,27 +51,8 @@ const AdminAppsPage = () => {
 
     try {
       const response = await handleGetRequest("/apps?series=true");
-      setPagination(response.data.data.graph_data);
+      setAppGraphData(response.data.data.graph_data);
       setAppTotal(response.data.data.metadata.total_apps);
-      //not sure what this was for but it doesn't seem relevant
-      // if (response.data.data.graph_data > 0) {
-      //   //const totalNumberOfApps = response.data.data.pagination.total;
-      //   handleGetRequest(`/apps?per_page=10`)
-      //     .then((response) => {
-      //       if (response.data.data.apps.length > 0) {
-      //         setApps(response.data.data.apps);
-      //         setLoading(false);
-
-      //       } else {
-      //         throw new Error("No Apps found");
-      //       }
-      //     })
-      //     .catch(() => {
-      //       setFeedback("Failed to fetch all apps, please try again");
-      //     });
-      // } else {
-      //   setFeedback("No Apps found");
-      // }
     } catch (error) {
       setFeedback("Failed to fetch Apps metrics");
     } finally {
@@ -84,7 +77,6 @@ const AdminAppsPage = () => {
   );
 
   const searchThroughAccounts = (keyword) => {
-    // use api
     handleChangePage(1);
     gettingApps(1, keyword);
   };
@@ -106,6 +98,9 @@ const AdminAppsPage = () => {
     handleChangePage(currentPage);
     gettingApps();
   };
+
+  filteredGraphData = filterGraphData(appGraphData, period);
+
   return (
     <div className="APage">
       <div className="TopRow">
@@ -227,7 +222,7 @@ const AdminAppsPage = () => {
                   </div>
                 </span>
               </div>
-              {pagination.length !== 0 ? (
+              {appGraphData.length !== 0 ? (
                 <AreaChart
                   width={840}
                   height={350}
@@ -238,7 +233,7 @@ const AdminAppsPage = () => {
                     bottom: 0,
                   }}
                   syncId="anyId"
-                  data={pagination}
+                  data={period !== "all" ? filteredGraphData : appGraphData}
                 >
                   <Line type="monotone" dataKey="Value" stroke="#8884d8" />
                   <CartesianGrid stroke="#ccc" />
@@ -271,6 +266,20 @@ const AdminAppsPage = () => {
                     dataKey="value"
                     stroke="#82ca9d"
                     fill="#82ca9d"
+                  />
+                  <Tooltip
+                    labelFormatter={(value) => {
+                      const monthNames = retrieveMonthNames();
+                      const month = parseInt(value) - 1;
+                      return monthNames[month].name;
+                    }}
+                    formatter={(value) => {
+                      if (value === 1) {
+                        return [`${value} app`];
+                      } else {
+                        return [`${value} apps`];
+                      }
+                    }}
                   />
                 </AreaChart>
               ) : (
