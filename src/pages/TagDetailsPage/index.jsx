@@ -34,6 +34,63 @@ const TagDetailsPage = () => {
 
                   <div className={styles.tagDetailsCard}>
                     Found 100 public projects connected to this tag...
+                    <div className={styles.card}>
+                      <div className={styles.cardContent}>
+                        <div className={styles.tagName}>My project</div>
+
+                        <div className={styles.statItem}>
+                          <span>This is my description</span>
+                          <span>50 projects</span>
+                        </div>
+                      </div>
+                      <div className={styles.followButtonArea}>
+                        <button
+                          className={styles.followButton}
+                          // onClick={() => handleFollow(id)}
+                          // disabled={isFollowing}
+                        >
+                          + Follow
+                        </button>
+                      </div>
+                    </div>
+                    <div className={styles.card}>
+                      <div className={styles.cardContent}>
+                        <div className={styles.tagName}>My project</div>
+
+                        <div className={styles.statItem}>
+                          <span>This is my description</span>
+                          <span>50 projects</span>
+                        </div>
+                      </div>
+                      <div className={styles.followButtonArea}>
+                        <button
+                          className={styles.followButton}
+                          // onClick={() => handleFollow(id)}
+                          // disabled={isFollowing}
+                        >
+                          + Follow
+                        </button>
+                      </div>
+                    </div>
+                    <div className={styles.card}>
+                      <div className={styles.cardContent}>
+                        <div className={styles.tagName}>My project</div>
+
+                        <div className={styles.statItem}>
+                          <span>This is my description</span>
+                          <span>50 projects</span>
+                        </div>
+                      </div>
+                      <div className={styles.followButtonArea}>
+                        <button
+                          className={styles.followButton}
+                          // onClick={() => handleFollow(id)}
+                          // disabled={isFollowing}
+                        >
+                          + Follow
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

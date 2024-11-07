@@ -4,53 +4,48 @@ import { ReactComponent as Stats } from "../../assets/images/bars.svg";
 import Spinner from "../Spinner";
 import axios from "../../axios";
 import { handleDeleteRequest } from "../../apis/apis";
-import { useMutation, useQueryClient} from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTag } from "../../hooks/useTag";
 
-
-
 const TagCard = ({ id, isModalTag }) => {
-const [isFollowing, setFollowing]=useState(false)
+  const [isFollowing, setFollowing] = useState(false);
 
-  const queryClient= useQueryClient();
+  const queryClient = useQueryClient();
 
-  const {data: tag, isLoading}=useTag(id)
-  if(isLoading) <p>loading...</p>
-  console.log("data", tag)
+  const { data: tag, isLoading } = useTag(id);
+  if (isLoading) <p>loading...</p>;
 
   const followTagMutation = useMutation({
     mutationFn: () => axios.post(`tags/${id}/following`, {}),
-    onMutate: ()=>{
-      setFollowing(true)
+    onMutate: () => {
+      setFollowing(true);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["tag", id],
       });
-      setTimeout(()=>{
-        setFollowing(false)
-      },2000)
+      setTimeout(() => {
+        setFollowing(false);
+      }, 2000);
     },
-   
   });
 
   const unfollowTagMutation = useMutation({
     mutationFn: () => handleDeleteRequest(`tags/${id}/following`, {}),
-    onMutate: ()=>{
-      setFollowing(true)
+    onMutate: () => {
+      setFollowing(true);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["tag", id],
       });
-      setTimeout(()=>{
-        setFollowing(false)
-      },2000)
+      setTimeout(() => {
+        setFollowing(false);
+      }, 2000);
     },
-   
   });
 
-  const handleFollow =(id) => {
+  const handleFollow = (id) => {
     if (tag?.data?.data?.is_following) {
       setFollowing(true);
       unfollowTagMutation.mutate();
@@ -59,7 +54,6 @@ const [isFollowing, setFollowing]=useState(false)
       followTagMutation.mutate();
     }
   };
-
 
   return (
     <div className={styles.card}>
@@ -72,7 +66,7 @@ const [isFollowing, setFollowing]=useState(false)
               onClick={() => handleFollow(id)}
               disabled={isFollowing}
             >
-              {isFollowing? (
+              {isFollowing ? (
                 <Spinner size="small" />
               ) : tag?.data?.data?.is_following ? (
                 "Unfollow"
@@ -87,7 +81,8 @@ const [isFollowing, setFollowing]=useState(false)
             <Stats className={styles.stats} />{" "}
           </span>
           <span>
-            {tag?.data?.data?.projects_count !== 0 && tag?.data?.data?.projects_count === 1
+            {tag?.data?.data?.projects_count !== 0 &&
+            tag?.data?.data?.projects_count === 1
               ? "1 project"
               : `${tag?.data?.data?.projects_count} projects`}
           </span>
@@ -101,7 +96,7 @@ const [isFollowing, setFollowing]=useState(false)
             onClick={() => handleFollow(id)}
             disabled={isFollowing}
           >
-            {isFollowing? (
+            {isFollowing ? (
               <Spinner size="small" />
             ) : tag?.data?.data?.is_following ? (
               "Unfollow"
