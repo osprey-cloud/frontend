@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - microservice
+      - deploy/gcp
 
   workflow_dispatch:
 
@@ -58,10 +59,10 @@ jobs:
 
       - name: Add Env vars
         env:
-          REACT_APP_API_BASE_URL: https://product.renu-01.cranecloud.io
-          REACT_APP_ACTIVITY_LOGS_API_URL: https://logger.renu-01.cranecloud.io/api
-          REACT_APP_MONITORING_API_URL: https://monitoring.renu-01.cranecloud.io
-          REACT_APP_DATABASE_API_URL: https://database.renu-01.cranecloud.io
+          REACT_APP_API_BASE_URL: http://cranecloud-backend
+          REACT_APP_ACTIVITY_LOGS_API_URL: http://activity-logger/api
+          REACT_APP_MONITORING_API_URL: http://monitoring-api
+          REACT_APP_DATABASE_API_URL: http://database-api
           REACT_APP_MIRA_API_URL: ${{ secrets.REACT_APP_MIRA_API_URL }}
           REACT_APP_FLUTTERWAVE_PUBLIC_KEY_TESTING: ${{ secrets.REACT_APP_FLUTTERWAVE_PUBLIC_KEY_TESTING }}
           REACT_APP_GITHUB_CLEINT_ID: ${{ secrets.REACT_APP_GITHUB_CLEINT_ID_STAGING }}
@@ -116,9 +117,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: azure/k8s-set-context@v1
+      # - uses: azure/k8s-set-context@v1
+      #   with:
+      #     kubeconfig: ${{ secrets.RENU_KUBECONFIG}}
+
+      - name: Login (GCP)
+        uses: google-github-actions/auth@v0
         with:
-          kubeconfig: ${{ secrets.RENU_KUBECONFIG}}
+          credentials_json: ${{ secrets.CREDENTIALS_JSON }}
+
+      - name: Install (Gcloud)
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: crane-cloud-274413
+          install_components: "gke-gcloud-auth-plugin"
+
+      - name: Login (Kubernetes Cluster)
+        uses: google-github-actions/get-gke-credentials@v1
+        with:
+          cluster_name: staging-cluster
+          location: us-central1-a
+          project_id: crane-cloud-274413
 
       - name: Deploy or Update Deployment
         run: |
