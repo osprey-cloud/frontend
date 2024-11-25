@@ -92,23 +92,12 @@ export default class PasswordReset extends React.Component {
 
     return (
       <div className="SectionsContainer">
-        <div className="LeftSectionContent">
-          <Logo className="Brand" />
-          <h1 className="BrandText">Crane Cloud</h1>
-          <h2 className="BrandSubText">
-            Crane Cloud is an open-source multi-cloud software platform which
-            provides a comprehensive suite of cloud services tailored to meet
-            various needs, including deploying applications, storing data, and
-            managing computing resources for cloud-native application deployment
-            and management.
-          </h2>
-        </div>
         <div className="RightSectionContent">
           {!registered ? (
             <>
               <div className="ResetPasswordContent">
                 <div className="ResetPasswordContentHeading">
-                  <h1>Password Reset</h1>
+                  <h1 className="LoginContentTitle">Password Reset</h1>
                   <p>
                     Enter your email address so that we can send you a link to
                     reset your password.
@@ -129,12 +118,12 @@ export default class PasswordReset extends React.Component {
                     <div className="ResetPasswordErrorDiv">{error}</div>
                   )}
 
-                  <PrimaryButton onClick={this.handleSubmit}>
+                  <PrimaryButton onClick={this.handleSubmit} color="primary">
                     {loading ? <Spinner /> : "RESET"}
                   </PrimaryButton>
 
                   <div className="ResetPasswordContentBottomLink ResetPasswordLinkContainer">
-                    <Link to="/login" className="ResetPasswordContentLink">
+                    <Link to="/login" className="LoginContentLink">
                       Back to Login.
                     </Link>
                   </div>

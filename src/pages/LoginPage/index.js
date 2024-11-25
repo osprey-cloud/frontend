@@ -194,20 +194,11 @@ class LoginPage extends React.Component {
     } = this.state;
     return (
       <div className="SectionsContainer">
-        <div className="LeftSectionContent">
-          <Logo className="Brand" />
-          <h1 className="BrandText">Crane Cloud</h1>
-          <h2 className="BrandSubText">
-            Crane Cloud is an open-source multi-cloud software platform which
-            provides a comprehensive suite of cloud services tailored to meet
-            various needs, including deploying applications, storing data, and
-            managing computing resources for cloud-native application deployment
-            and management.
-          </h2>
-        </div>
         <div className="RightSectionContent">
-          <h1 className="LoginContentTitle">Login to the cloud</h1>
-
+          <div className="LoginContentHeader">
+            <Logo className="Brand" />
+            <h1 className="LoginContentTitle">Login to the cloud</h1>
+          </div>
           <form onSubmit={this.handleSubmit} className="LoginContentInputs">
             <InputText
               required
@@ -246,6 +237,7 @@ class LoginPage extends React.Component {
               className="LoginButton AuthBtn"
               onClick={this.handleSubmit}
               type="submit"
+              color="primary"
             >
               {loading ? <Spinner /> : "login"}
             </PrimaryButton>
@@ -282,6 +274,7 @@ class LoginPage extends React.Component {
             </div>
           </form>
         </div>
+        {/* </div> */}
       </div>
     );
   }

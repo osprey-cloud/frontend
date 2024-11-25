@@ -8,8 +8,12 @@
   flex: 1;
   display: flex;
   flex-direction: row !important;
-  justify-content: space-between;
-  background-color: #fff !important;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(rgb(255, 255, 255) 0.5px, transparent 0.5px),
+    radial-gradient(rgb(255, 255, 255) 0.5px, var(--primary-color) 1px);
+  background-size: 24px 24px;
+  background-position: 0 0, 10px 10px;
 }
 
 .LoginContent {
@@ -23,7 +27,7 @@
 }
 
 .BrandSubText {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   text-align: center;
   color: var(--gray-color);
 }
@@ -34,7 +38,7 @@
 }
 
 .LeftSectionContent {
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,21 +46,36 @@
   padding: 3rem;
 }
 
+.LeftSectionContent h1 {
+  margin: 0
+}
+
+.LoginContentHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .RightSectionContent {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 1.5rem;
   align-items: center;
-  width: 50%;
-  background: var(--primary-color);
-  color: #fff;
-  padding: 0 1rem 0 1rem;
-  border-bottom-left-radius: 1rem;
-  border-top-left-radius: 1rem;
+  background: #fff;
+  color: var(--primary-color);
+  padding:  2rem;
+  border-radius: 1rem;
+}
+
+
+.LoginContentTitle {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 .AuthBtn {
-  padding: 0.9rem;
+  padding: 0.7rem;
   height: auto;
 }
 
@@ -64,7 +83,17 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 25rem;
+  width: 20rem;
+}
+
+.RightSectionContent input {
+  color: #000;
+  border: 1px solid #000;
+}
+
+.RightSectionContent .InputText::placeholder {
+  color: #888888; /* Change this to your desired color */
+  opacity: 1; /* Firefox requires this to show the custom color */
 }
 
 /* .LoginContentInputs>* {
@@ -83,8 +112,8 @@
 }
 
 .LoginContentLink {
-  color: var(--secondary-light-color);
-  border-bottom: 1px solid var(--secondary-light-color);
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--primary-color);
 }
 
 .LoginErrorDiv {
@@ -147,12 +176,12 @@
 .LoginWith {
   width: 100%;
   text-align: center;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #bcbcbc;
   line-height: 0.1em;
 }
 
 .LoginWith span {
-  background-color: var(--primary-color);
+  background-color: #fff;
   padding: 0 1rem;
 }
 

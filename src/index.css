@@ -35,8 +35,8 @@ body {
   margin: 0;
   padding: 0;
   color: #000;
-  font-family: proxima-nova, sans-serif;
-  font-size: 1rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 0.8rem;
 }
 
 #root>div {
