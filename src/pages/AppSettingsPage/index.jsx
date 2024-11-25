@@ -347,7 +347,7 @@ const AppSettingsPage = () => {
     const projectID = app?.project_id;
     setLoadingIndex(index);
     const keyToRemove = Object.keys(envVars)[index];
-    console.log(keyToRemove)
+    console.log(keyToRemove);
 
     if (keyToRemove !== null) {
       const updatePayload = { delete_env_vars: [keyToRemove] };
@@ -641,7 +641,7 @@ const AppSettingsPage = () => {
 
               <>
                 <div className="SectionTitle">Manage Application</div>
-                <div className="ProjectInstructions">
+                <div className="ProjectInstructions BigCard">
                   <div className="MemberBody">
                     <SettingsActionRow
                       title="Setup CI/CD"

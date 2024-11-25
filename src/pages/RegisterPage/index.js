@@ -258,7 +258,7 @@ export default class RegisterPage extends Component {
       );
     return (
       <div className="SectionsContainer">
-        <div className="RightSectionContent" style={{ width: "60%" }}>
+        <div className="RightSectionContent" style={{ width: "70%" }}>
           <div className="LoginContentHeader">
             <Logo className="Brand" />
             <h1 className="LoginContentTitle">Create an account</h1>

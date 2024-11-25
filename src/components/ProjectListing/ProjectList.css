@@ -161,7 +161,7 @@
 
 
     .NewResourceCardHeader {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .NewResourceCardCount {
@@ -183,7 +183,7 @@
         /* display: grid; */
         align-items: center;
         padding-top: 1rem;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .UserSection .piechart {
@@ -226,7 +226,7 @@
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #cccccc;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .AdminSearchInput input {
@@ -235,7 +235,7 @@
         border-top-left-radius: 4px 2px;
         border-bottom-left-radius: 3px 4px;
         color: #000;
-        font-size: 1rem;
+        font-size: 0.9rem;
         height: 40px;
         max-width: 10rem;
         padding: 1rem;

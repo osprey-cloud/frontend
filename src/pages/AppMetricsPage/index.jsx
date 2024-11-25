@@ -49,7 +49,7 @@ const AppMetricsPage = () => {
   const [redeploy, setRedeploy] = useState(false);
   const [deployError, setDeployError] = useState("");
   const [spin, setSpin] = useState(false);
-  const [isJupyterNotebook, setIsJupyterNotebook] = useState(false)
+  const [isJupyterNotebook, setIsJupyterNotebook] = useState(false);
   const [activeTrainedModelTab, setActiveTrainedModelTab] = useState("readMe");
   const [trainedModelInput, setTrainedModelInput] = useState("");
 
@@ -115,8 +115,8 @@ const AppMetricsPage = () => {
   }, [dispatch, projectID, appID]);
 
   useEffect(() => {
-    if(app?.is_notebook){
-       setIsJupyterNotebook(true);
+    if (app?.is_notebook) {
+      setIsJupyterNotebook(true);
     }
   }, [app]);
 
@@ -176,14 +176,11 @@ const AppMetricsPage = () => {
     >
       <div className={trainedModelApp ? styles.TrainedModelAppMetricsPage : ""}>
         <div className={styles.AppMetricsPage}>
-          <div
-            className={
-              styles.SummaryCardContainer + " " + styles.SummaryCardDimentions
-            }
-          >
+          <div className={"SmallCard " + styles.SummaryCardDimentions}>
             <div className={styles.CardHeaderSection}>
               <div className={styles.CardTitle}>
-                {isJupyterNotebook? "Notebook Summary" : "App Summary"}</div>
+                {isJupyterNotebook ? "Notebook Summary" : "App Summary"}
+              </div>
             </div>
             {spin ? (
               <div className={styles.SummarySectionArea}>
@@ -202,13 +199,17 @@ const AppMetricsPage = () => {
                 >
                   <div className={styles.InnerCardSections}>
                     <div className={styles.InnerContentGrid}>
-                      <div className={styles.InnerTitlesStart}>{isJupyterNotebook? "Notebook Name" : "App Name"}</div>
+                      <div className={styles.InnerTitlesStart}>
+                        {isJupyterNotebook ? "Notebook Name" : "App Name"}
+                      </div>
                       <div className={styles.InnerContentName}>
                         {appInfo.name}
                       </div>
                     </div>
                     <div className={styles.InnerContentGrid}>
-                      <div className={styles.InnerTitlesStart}>{isJupyterNotebook? "Notebook Url" : "App Url"}</div>
+                      <div className={styles.InnerTitlesStart}>
+                        {isJupyterNotebook ? "Notebook Url" : "App Url"}
+                      </div>
                       {appInfo.url ? (
                         <>
                           {redeploy ? (
@@ -263,7 +264,9 @@ const AppMetricsPage = () => {
                   <hr />
                   <div className={styles.InnerCardSections}>
                     <div className={styles.InnerContentGrid}>
-                      <div className={styles.InnerTitlesMiddle}>{isJupyterNotebook? "Notebook Status" : "App Status"}</div>
+                      <div className={styles.InnerTitlesMiddle}>
+                        {isJupyterNotebook ? "Notebook Status" : "App Status"}
+                      </div>
                       <div className={styles.InnerContentStatus}>
                         <AppStatus appStatus={appInfo.status} />
                         <div>
@@ -528,14 +531,16 @@ const AppMetricsPage = () => {
             </div>
             <div className={styles.TrainedModelPromptInput}>
               <BlackInputText
-              name={trainedModelInput}
-              value={trainedModelInput}
-              placeholder="Ask me"
-              onChange={(e)=>{setTrainedModelInput(e.target.value)}}
+                name={trainedModelInput}
+                value={trainedModelInput}
+                placeholder="Ask me"
+                onChange={(e) => {
+                  setTrainedModelInput(e.target.value);
+                }}
               />
-              <PrimaryButton onClick={()=>{}}>Compute</PrimaryButton>
+              <PrimaryButton onClick={() => {}}>Compute</PrimaryButton>
             </div>
-            <div style={{marginLeft:'1rem'}}>Output:</div>
+            <div style={{ marginLeft: "1rem" }}>Output:</div>
             <div className={styles.TrainedModelPromptOutPut}></div>
           </div>
         )}

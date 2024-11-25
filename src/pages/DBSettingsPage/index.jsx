@@ -779,7 +779,7 @@ class DBSettingsPage extends React.Component {
               </div>
 
               <div className="SectionTitle">More Options</div>
-              <div className="ProjectInstructions">
+              <div className="ProjectInstructions BigCard">
                 <div className="MemberBody">
                   <SettingsActionRow
                     title="Change Password"

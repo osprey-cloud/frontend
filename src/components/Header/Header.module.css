@@ -180,7 +180,7 @@
 
 .HeaderUserName{
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
   overflow: hidden;
   text-overflow: ellipsis;
   color:#000;
