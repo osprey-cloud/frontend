@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 const PrimaryButton = (props) => {
   const { children, className, btntype, color, small, transparent, noPadding } =
     props;
-  console.log(color);
   const getColorClass = () => {
     switch (color) {
       case "primary":

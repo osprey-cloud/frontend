@@ -15,14 +15,16 @@ const RevisionItem = ({ entry, onRollbackClick }) => (
       {moment(entry.created_at).format("DD-MM-YYYY HH:mm")}
     </div>
     {!entry.current ? (
-      <div
-        className="rollback-link"
-        onClick={() => onRollbackClick(entry.revision_id)}
-      >
-        Rollback here
+      <div className="last-column-container">
+        <div
+          className="rollback-link"
+          onClick={() => onRollbackClick(entry.revision_id)}
+        >
+          Rollback here
+        </div>
       </div>
     ) : (
-      <div className="current-label-container">
+      <div className="last-column-container">
         <span className="current-label">Current</span>
       </div>
     )}

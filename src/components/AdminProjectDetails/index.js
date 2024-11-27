@@ -83,7 +83,6 @@ const AdminProjectDetails = () => {
   const handleEnableButtonClick = () => {
     // let { projectDetails } = this.state;
     // const { projectID } = this.props.match.params;
-    console.log(details);
 
     try {
       if (details.disabled) {

@@ -16,7 +16,6 @@ const [isFollowing, setFollowing]=useState(false)
 
   const {data: tag, isLoading}=useTag(id)
   if(isLoading) <p>loading...</p>
-  console.log("data", tag)
 
   const followTagMutation = useMutation({
     mutationFn: () => axios.post(`tags/${id}/following`, {}),

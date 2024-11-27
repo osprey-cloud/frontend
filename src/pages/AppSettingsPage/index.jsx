@@ -347,7 +347,6 @@ const AppSettingsPage = () => {
     const projectID = app?.project_id;
     setLoadingIndex(index);
     const keyToRemove = Object.keys(envVars)[index];
-    console.log(keyToRemove);
 
     if (keyToRemove !== null) {
       const updatePayload = { delete_env_vars: [keyToRemove] };

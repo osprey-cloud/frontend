@@ -752,23 +752,19 @@ ul li {
 }
 
 .version-item {
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd; */
   display: grid;
   grid-template-columns:  3fr 1fr 1fr;
-  /* Adjust based on your layout */
   align-items: center;
-  /* This aligns items vertically within their row */
   gap: 10px;
-  padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .version-item:last-child {
   border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .version-details {
@@ -815,7 +811,7 @@ ul li {
   text-decoration: underline;
   cursor: pointer;
 }
-.current-label-container{
+.last-column-container{
   display: flex;
   justify-content: flex-end;
 }
