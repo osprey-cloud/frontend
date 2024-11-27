@@ -2,7 +2,7 @@
   border: 1px solid #fff;
   box-sizing: border-box;
   font-size: inherit;
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 5px;
 }
 .InputText::placeholder {

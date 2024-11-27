@@ -45,7 +45,3 @@
 .DateRangeSection:hover {
     cursor: pointer;
 }
-
-.TableHeader .SelectElementValue {
-    gap: 1rem;
-}

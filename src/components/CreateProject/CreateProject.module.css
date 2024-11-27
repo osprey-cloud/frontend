@@ -1,6 +1,6 @@
 .ProjectForm {
   width: 100%;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .CreateProjectError {
@@ -129,7 +129,7 @@ textarea {
 }
 
 .NormalText{
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .ClusterToggleSection{

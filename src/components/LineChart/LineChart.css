@@ -14,7 +14,8 @@
 .GraphSection {
   display: flex;
   font-family: monaco;
-  font-size: 13px;
+  font-size: 0.7rem;
+  color: var(--gray-color);
 }
 
 .NoGraphData {

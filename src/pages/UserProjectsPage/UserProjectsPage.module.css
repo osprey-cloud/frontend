@@ -213,11 +213,7 @@
     background-color: var(--gray-bg-light-color);
   }
   
-  .SearchBar {
-    flex-grow: 1;
-    display: flex;
-    padding: 2rem;
-  }
+  
   
   .PaginationSection{
     margin-bottom: 3rem;

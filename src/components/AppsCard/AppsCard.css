@@ -19,11 +19,12 @@
 
 
 .AppCardHeader {
-  font-size: 1.125rem;
-  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .AppIconsSection {
@@ -37,7 +38,8 @@
 }
 
 .AppCardBottomSection {
-  padding: 0 1.25rem;
+  padding: 0 1rem;
+  padding-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -47,7 +49,7 @@
 .AppGraphSummaryLabel {
   padding-top: 2px;
   color: #cccccc;
-  font-size: 14px;
+  font-size: 0.7rem;
 }
 
 .AppGraphSummary {
@@ -56,8 +58,8 @@
 
 .AppUrlText {
   flex: 1 1 auto;
-  padding: 0.5rem 1.25rem;
-  font-size: 16px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
   font-weight: normal;
   box-sizing: border-box;
   margin-top: 1.5rem;
@@ -77,7 +79,7 @@
 
 .AppUrl a {
   text-decoration: underline;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--primary-color);
 }
 
@@ -113,6 +115,7 @@
 
 .AppCard:hover {
   border: 1px solid var(--secondary-color);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
 }
 
 .FailAppCard:hover {

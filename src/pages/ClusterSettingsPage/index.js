@@ -164,7 +164,7 @@ class ClusterSettingsPage extends React.Component {
             <div className={styles.ContentSection}>
               <div className={`${styles.ProjectSections} SmallContainer`}>
                 <div className={styles.ProjectSectionTitle}>Manage Cluster</div>
-                <div className={styles.ProjectInstructions}>
+                <div className={"ProjectInstructions BigCard"}>
                   <div className={styles.ProjectButtonRow}>
                     <div className={styles.SettingsSectionInfo}>
                       <div className={styles.SettingsSectionInfoHeader}>

@@ -289,13 +289,8 @@
 }
 
 .ProjectInstructions {
-  padding: 1rem;
-  background: #ffffff;
-  border-radius: 15px;
-  border: 1px solid var(--gray-light-color);
   display: grid;
   gap: 1rem;
-
 }
 
 .SettingsSectionInfo {
@@ -309,17 +304,10 @@
   border-bottom: 0.9px solid rgba(204, 204, 204, 0.69);
 }
 
-.SubTitle {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--primary-dark-color);
-  margin: 0;
-  padding-top: 1rem;
-}
+
 
 .SubTitleContent {
-  font-size: 1rem;
-  font-weight: lighter;
+  font-size: 0.8rem;
 }
 
 .SettingsSectionInfo1 {
@@ -382,7 +370,7 @@
   display: flex;
   flex-wrap: nowrap;
   gap: 0.6rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .AdminProfileRowItem span {

@@ -166,10 +166,9 @@
 }
 
 .InnerCardSections {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: 1fr 1fr;
-  gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .InnerContentSection {
@@ -190,8 +189,7 @@
   justify-content: center;
   flex-grow: 1;
   align-items: center;
-  padding: 1rem 2rem;
-  min-height: 10rem;
+  padding: 2rem;
 }
 
 .SummaryCardContainer:hover {
@@ -210,7 +208,7 @@
   color: #000;
   font-weight: bold;
   text-align: start;
-  padding: 1rem 1rem 0rem 0rem;
+  /* padding: 1rem 1rem 0rem 0rem; */
 }
 
 .InnerItemCopy:hover {
@@ -226,21 +224,18 @@
   color: #000;
   font-weight: bold;
   text-align: center;
-  padding-top: 1rem;
 }
 
 .InnerTitlesEnd {
   color: #000;
   font-weight: bold;
   text-align: end;
-  padding-top: 1rem;
 }
 
 .InnerContentGrid {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 }
 
 .InnerContentEnd {
@@ -253,7 +248,6 @@
   justify-content: center;
   column-gap: .5rem;
   color: #555;
-  font-size: 0.9rem;
 }
 
 .InnerContentAge {
@@ -266,6 +260,7 @@
   color: var(--primary-color);
   text-overflow: ellipsis;
 }
+
 
 .InnerContentLinkText a {
   color: inherit;
@@ -282,8 +277,13 @@
 
 .InnerContentLink {
   display: grid;
-  grid-template-columns: auto 20%;
+  grid-template-columns: auto 10%;
   gap: 0.5rem;
+  align-items: center;
+}
+.InnerContentLink svg{
+  height: 1rem;
+  width: 1rem;
 }
 
 .Icons {

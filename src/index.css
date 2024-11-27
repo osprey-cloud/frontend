@@ -35,8 +35,8 @@ body {
   margin: 0;
   padding: 0;
   color: #000;
-  font-family: proxima-nova, sans-serif;
-  font-size: 1rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 0.8rem;
 }
 
 #root>div {
@@ -191,7 +191,7 @@ input[type="password"] {
 
 /* ////////  FONT STYLING  ///////// */
 .SectionTitle {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 500;
   color: var(--primary-dark-color);
   margin: 0;
@@ -200,7 +200,7 @@ input[type="password"] {
 }
 
 .SubTitle {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--primary-dark-color);
   margin: 0;
@@ -216,7 +216,7 @@ input[type="password"] {
 }
 
 .SubText {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 400;
   color: var(--primary-dark-color);
   margin: 0;
@@ -683,15 +683,33 @@ tr.TableLoading td {
 .BigCard {
   padding: 1.5rem;
   background: #ffffff;
-  border-radius: 15px;
+  border-radius: 0.7rem;
   border: 1px solid var(--gray-light-color);
   height: fit-content;
 }
 
+.BigCard:hover {
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.15);
+}
+
+.SmallCard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: #000000;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  height: 10rem;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+.SmallCard:hover {
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.15);
+}
 
 /* ////////////---- Pagination ---- ///////////// */
 .AdminPaginationSection {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem; 
   margin-top: 1.5rem;
   display: flex;
   align-items: center;

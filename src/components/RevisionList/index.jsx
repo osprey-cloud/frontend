@@ -1,6 +1,5 @@
-import { DisplayDateTime } from "../../helpers/dateConstants";
 import { ReactComponent as Upload } from "../../assets/images/upload-cloud.svg";
-
+import moment from "moment";
 const RevisionItem = ({ entry, onRollbackClick }) => (
   <div className={`version-item ${entry.current ? "current" : ""}`}>
     <div className="version-details">
@@ -13,17 +12,21 @@ const RevisionItem = ({ entry, onRollbackClick }) => (
       </div>
     </div>
     <div className="version-date">
-      {DisplayDateTime(new Date(entry.created_at))}
+      {moment(entry.created_at).format("DD-MM-YYYY HH:mm")}
     </div>
     {!entry.current ? (
-      <div
-        className="rollback-link"
-        onClick={() => onRollbackClick(entry.revision_id)}
-      >
-        Rollback here
+      <div className="last-column-container">
+        <div
+          className="rollback-link"
+          onClick={() => onRollbackClick(entry.revision_id)}
+        >
+          Rollback here
+        </div>
       </div>
     ) : (
-      <span className="current-label">Current</span>
+      <div className="last-column-container">
+        <span className="current-label">Current</span>
+      </div>
     )}
   </div>
 );
