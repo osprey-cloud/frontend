@@ -150,16 +150,6 @@
   transform: scale(1.2);
 }
 
-.InfoHeader .SelectElementValue {
-  white-space: nowrap;
-  padding: 0.4rem;
-  gap: 0.6rem;
-}
-
-.InfoHeader .SelectOptionsWrapper {
-  white-space: nowrap;
-}
-
 .InfoHeader .SelectWrapper {
   padding-bottom: 0.9rem;
   max-height: 20px;

@@ -19,6 +19,7 @@
   align-items: flex-start;
   gap: 0.5rem;
   align-items: center;
+  cursor: pointer;
 }
 
 .SmallSelectElementValue {
@@ -26,10 +27,6 @@
   display: flex;
   justify-content: space-between;
 }
-
-/* .SelectElementValue.SelectElementPlaceholder {    */
-/* color: #808080; */
-/* }   */
 
 .SelectOptionsWrapper {
   background-color: #ffffff;
@@ -50,7 +47,7 @@
 }
 
 .SelectOptionsWrapper .SelectOption:hover {
-  background-color: var(--primary-color);
+  background-color: var(--gray-bg-light-color);
   cursor: pointer;
 }
 

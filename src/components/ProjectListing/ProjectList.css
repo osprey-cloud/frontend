@@ -32,10 +32,7 @@
     /* padding-left: 3rem; */
 }
 
-.SectionTitle .SelectElementValue .DropDownLink {
-    text-align: center;
-    justify-content: center;
-}
+
 
 /* .ClusterContainer {
     place-items: center;
@@ -49,14 +46,6 @@
     align-items: center;
 }
 
-.ChartContainer .VisualAreaHeader .SelectElementValue {
-    padding: 0.6rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
 
 .VisualAreaHeader .SectionTitle .SelectOptionsWrapper .SelectOption {
     padding: 0 1rem;
@@ -77,12 +66,6 @@
     cursor: pointer;
 }
 
-.TitleArea .SectionTitle .SelectElementValue {
-    gap: 0.5rem;
-    padding: 0.7rem;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
 
 @media (min-width : 768px),
 (max-width: 1280px) {
@@ -204,15 +187,6 @@
         flex-wrap: nowrap;
     }
 
-    .SelectElementValue {
-        padding: 0.2rem;
-        display: flex;
-        justify-content: space-between;
-        gap: 0.2rem;
-        align-items: center;
-        padding: 0.2rem;
-        font-size: 0.9rem;
-    }
 
     /* .SelectElementMain {
         border: 1px solid #000000;
