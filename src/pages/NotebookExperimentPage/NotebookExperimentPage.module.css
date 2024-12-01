@@ -1,0 +1,79 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.Title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.Description {
+    font-size: 14px;
+    color: #666;
+}
+
+.RightDashboardButtons {
+    display: flex;
+    gap: 2rem;
+}
+
+.editButton {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.searchBar {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.selectGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableHeader {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.tableCell {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.success {
+    color: green;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+    font-weight: bold
+}
+
+.rowHover {
+    background-color: #f9f9f9;
+}
