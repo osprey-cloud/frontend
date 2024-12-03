@@ -3,6 +3,8 @@
   width: 100%;
   display: grid;
   gap: 0.3rem;
+  font-size: 0.8rem !important;
+  font-weight: normal!important;
 }
 
 .SelectElementMain {
@@ -11,11 +13,13 @@
 }
 
 .SelectElementValue {
-  padding: 0.8rem;
+  padding: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 0.5rem;
+  align-items: center;
+  cursor: pointer;
 }
 
 .SmallSelectElementValue {
@@ -23,10 +27,6 @@
   display: flex;
   justify-content: space-between;
 }
-
-/* .SelectElementValue.SelectElementPlaceholder {    */
-/* color: #808080; */
-/* }   */
 
 .SelectOptionsWrapper {
   background-color: #ffffff;
@@ -47,14 +47,18 @@
 }
 
 .SelectOptionsWrapper .SelectOption:hover {
-  background-color: var(--primary-color);
+  background-color: var(--gray-bg-light-color);
   cursor: pointer;
-  color: #ffffff;
 }
 
 .SelectArrow {
-  padding-left: 10px;
   transition: all 400ms;
+  display: flex;
+  align-items: center;
+}
+.SelectArrow svg{
+  width: 0.7rem;
+  height: 0.7rem;
 }
 
 .SelectArrow.SelectArrowShowOptions {

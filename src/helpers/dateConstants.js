@@ -90,7 +90,6 @@ export const DisplayDateTime = (date) => {
     minutes = minutes < 10 ? '0'+minutes : minutes;
     var strTime = hours + ':' + minutes + '' + ampm;
     return (date.getMonth()+1) + "-" + date.getDate() + "-" + date.getFullYear() + "  " + strTime;
-
 }
 
 // words date format

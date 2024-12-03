@@ -90,20 +90,11 @@ class AdminLoginPage extends React.Component {
 
     return (
       <div className="SectionsContainer">
-        <div className="LeftSectionContent">
-          <Logo className="Brand" />
-          <h1 className="BrandText">Crane Cloud</h1>
-          <h2 className="BrandSubText">
-            Crane Cloud is an open-source multi-cloud software platform which
-            provides a comprehensive suite of cloud services tailored to meet
-            various needs, including deploying applications, storing data, and
-            managing computing resources for cloud-native application deployment
-            and management.
-          </h2>
-        </div>
         <div className="RightSectionContent">
-          <h1 className="LoginContentTitle">Admin Login</h1>
-
+          <div className="LoginContentHeader">
+            <Logo className="Brand" />
+            <h1 className="LoginContentTitle">Admin Login</h1>
+          </div>
           <form onSubmit={this.handleSubmit}>
             <div className="LoginContentInputs">
               {/* Input fields */}
@@ -140,7 +131,7 @@ class AdminLoginPage extends React.Component {
                 </Link>
               </div>
 
-              <PrimaryButton onClick={this.handleSubmit}>
+              <PrimaryButton onClick={this.handleSubmit} color="primary">
                 {loading ? <Spinner /> : "login"}
               </PrimaryButton>
 

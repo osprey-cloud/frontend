@@ -2,7 +2,7 @@
 .NoResourcesMesssage {
   flex-grow: 1;
   display: flex;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 4rem;
   text-align: center;
   justify-content: center;
@@ -127,7 +127,7 @@
 
 .ActivityEmail {
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 .ActivityDate {
   font-size: 0.8rem;

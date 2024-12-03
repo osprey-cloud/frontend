@@ -58,120 +58,120 @@ const DockerWebHook = () => {
         <Header />
       </div>
       <div className="SectionContainer">
-      <div className="Mainsection">
-        <div className="MainContentSection">
-          <div className="InformationBarSection">
-            <InformationBar
-              header={<span onClick={goBack}>App Settings</span>}
-              showBtn={false}
-              showBackBtn={true}
-            />
-          </div>
-          <div className="ShortContainer">
-            <div className="ContentSection">
-              <div className="AdminUserPageContainer">
-                <div className="AdminDBSections">
-                  <div className="SectionTitle">
-                    Set up Continous Integration
-                  </div>
-                  <div className="ProjectInstructions">
-                    <div className="MemberBody">
-                      <div className="MemberTableRow">
-                        <div className="SettingsSectionRow">
-                          <div className="SubTitle">
-                            Specify Image Tag
-                            <br />
-                            <div className="SubTitleContent">
-                              Specify Image Tag for your image and if none is
-                              provided <strong>"Latest"</strong> will be chosen
-                              as the default tag.
+        <div className="Mainsection">
+          <div className="MainContentSection">
+            <div className="InformationBarSection">
+              <InformationBar
+                header={<span onClick={goBack}>App Settings</span>}
+                showBtn={false}
+                showBackBtn={true}
+              />
+            </div>
+            <div className="ShortContainer">
+              <div className="ContentSection">
+                <div className="AdminUserPageContainer">
+                  <div className="AdminDBSections">
+                    <div className="SectionTitle">
+                      Set up Continous Integration
+                    </div>
+                    <div className="ProjectInstructions BigCard">
+                      <div className="MemberBody">
+                        <div className="MemberTableRow">
+                          <div className="SettingsSectionRow">
+                            <div className="SubTitle">
+                              Specify Image Tag
+                              <br />
+                              <div className="SubTitleContent">
+                                Specify Image Tag for your image and if none is
+                                provided <strong>"Latest"</strong> will be
+                                chosen as the default tag.
+                              </div>
                             </div>
                           </div>
                         </div>
+                        <br />
+                        <div className="MemberTableRow">
+                          <div className="PortSection">
+                            <div>Add Tag:</div>
+                            <div className="commandInputSection">
+                              <div>
+                                <input
+                                  type="text"
+                                  value={imageTag}
+                                  onChange={handleInputChange}
+                                  placeholder="Enter a value"
+                                  className="imageTag"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <br />
+                        </div>
+                        <div>
+                          <SettingsActionRow
+                            title="Generate Link"
+                            content="To Generate a link with a token click the Generate
+                        link button."
+                            buttonLabel="Generate Link"
+                            onButtonClick={updateUrl}
+                          />
+                          <div className="DBInfoBottom">
+                            {showUrl && (
+                              <div>
+                                <p>
+                                  <strong>Image Tag:</strong>{" "}
+                                  {imageTag || "latest"}
+                                </p>
+                                <p>
+                                  <strong> URL:</strong>
+                                  <code className="DockerInfo"> {url}</code>
+                                </p>
+                                <p>
+                                  <strong> Copy URL:</strong> &nbsp;
+                                  <CopyText onClick={copyUrlToClipboard} />
+                                  &nbsp;
+                                  {isCopied ? <Checked /> : null}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <br />
                       </div>
-                      <br />
-                      <div className="MemberTableRow">
-                        <div className="PortSection">
-                          <div>Add Tag:</div>
-                          <div className="commandInputSection">
-                            <div>
-                              <input
-                                type="text"
-                                value={imageTag}
-                                onChange={handleInputChange}
-                                placeholder="Enter a value"
-                                className="imageTag"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <br />
-                        <br />
+                    </div>
+                  </div>
+                  <div className="APPSections">
+                    <div className="SectionTitle">Add link to Dockerhub</div>
+                    <div className="ProjectInstructions BigCard">
+                      <div className="">
+                        1. To add the webhook, copy the generated link above and
+                        head to dockerhub.com under the repository of your
+                        docker image.
                       </div>
                       <div>
-                        <SettingsActionRow
-                          title="Generate Link"
-                          content="To Generate a link with a token click the Generate
-                        link button."
-                          buttonLabel="Generate Link"
-                          onButtonClick={updateUrl}
-                        />
-                        <div className="DBInfoBottom">
-                          {showUrl && (
-                            <div>
-                              <p>
-                                <strong>Image Tag:</strong>{" "}
-                                {imageTag || "latest"}
-                              </p>
-                              <p>
-                                <strong> URL:</strong>
-                                <code className="DockerInfo"> {url}</code>
-                              </p>
-                              <p>
-                                <strong> Copy URL:</strong> &nbsp;
-                                <CopyText onClick={copyUrlToClipboard} />
-                                &nbsp;
-                                {isCopied ? <Checked /> : null}
-                              </p>
-                            </div>
-                          )}
-                        </div>
+                        2. On the image repository click the{" "}
+                        <strong>Webhooks</strong> tab.
                       </div>
-                      <br />
+                      <div>
+                        3. Under new Webhook give your webhook any name of your
+                        choice and add the genereated URL token from Crane Cloud
+                        and click create.
+                      </div>
+                      <div>
+                        4. Continous Integration has been successfully been
+                        added for your application.
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="APPSections">
-                  <div className="SectionTitle">Add link to Dockerhub</div>
-                  <div className="ProjectInstructions">
-                    <div className="">
-                      1. To add the webhook, copy the generated link above and
-                      head to dockerhub.com under the repository of your docker
-                      image.
-                    </div>
-                    <div>
-                      2. On the image repository click the{" "}
-                      <strong>Webhooks</strong> tab.
-                    </div>
-                    <div>
-                      3. Under new Webhook give your webhook any name of your
-                      choice and add the genereated URL token from Crane Cloud
-                      and click create.
-                    </div>
-                    <div>
-                      4. Continous Integration has been successfully been added
-                      for your application.
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <br />
-              <br />
+                <br />
+                <br />
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

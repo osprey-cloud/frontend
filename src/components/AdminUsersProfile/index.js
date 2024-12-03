@@ -486,7 +486,7 @@ class AdminUserPage extends Component {
                       </div>
 
                       <div className="SectionTitle">Manage User</div>
-                      <div className="ProjectInstructions">
+                      <div className="ProjectInstructions BigCard">
                         <div className="MemberBody">
                           <SettingsActionRow
                             title="Add Credits to User"

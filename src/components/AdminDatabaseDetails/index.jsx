@@ -152,9 +152,9 @@ const AdminDatabaseDetails = () => {
 
                     <div className="AdminDBSections">
                       <div className="SectionTitle">Manage Database</div>
-                      <div className="ProjectInstructions">
+                      <div className="ProjectInstructions BigCard">
                         <div className="MemberBody">
-                          <SettingsActionRow 
+                          <SettingsActionRow
                             title="Disable Database"
                             content="This will temporarily disable the database."
                             buttonLabel="Disable"

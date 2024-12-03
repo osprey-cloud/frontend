@@ -11,7 +11,6 @@ const TagsList = () => {
 
   const { data: tags, isLoading: isLoadingTags } = useTags();
 
-  console.log("tags", tags);
 
   const handleViewMore = () => {
     setShowModal(true);

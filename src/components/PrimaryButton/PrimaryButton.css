@@ -1,18 +1,16 @@
 .Primary-Btn {
-  background-color: var(--secondary-color);
-  min-width: 8rem;
-  padding: 0.6rem;
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
   border: 1px solid var(--secondary-color);
+  background-color: transparent;
+  color: var(--secondary-color);
+  /* min-width: 8rem; */
+  padding: 0.4rem 0.8rem;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   white-space: nowrap;
-  border-radius: 5px;
+  border-radius: 4px;
   outline: none;
   text-transform: capitalize;
 }
@@ -27,9 +25,8 @@
 }
 
 .Primary-Btn:hover {
-  background-color: transparent;
-  color: var(--secondary-color);
-  border: 1px solid var(--secondary-color);
+  background-color: var(--secondary-color);
+  color: white;
 }
 
 .Primary-Btn.CancelBtn {
@@ -45,14 +42,16 @@
 
 .Primary-Btn.PrimaryDeleteBtn {
   border: 1px solid #d63b3b;
+  color: #d63b3b;
+  background-color: transparent;
+}
+
+.Primary-Btn.PrimaryDeleteBtn:hover {
   color: white;
   background-color: #d63b3b;
 }
 
-.Primary-Btn.PrimaryDeleteBtn:hover {
-  color: #d63b3b;
-  background-color: transparent;
-}
+
 
 .Primary-Btn.BlackPrimaryBtn {
   border: 1px solid #000;
@@ -76,17 +75,17 @@
   background-color: var(--primary-dark-color);
 }
 
-.Primary-Btn.PrimaryColorBtn {
+.Primary-Btn.PrimaryColorBtn:hover {
   border: 1px solid var(--primary-color);
   color: #fff;
   background-color: var(--primary-color);
 }
 
-.Primary-Btn.PrimaryColorBtn:hover {
+.Primary-Btn.PrimaryColorBtn {
   border: 1px solid var(--primary-color);
   background-color: transparent;
-  /* background-color: var(--primary-light-color); */
   color: var(--primary-color);
+  /* background-color: var(--primary-light-color); */
 }
 
 .Primary-Btn.PrimaryOutlineColorBtn {

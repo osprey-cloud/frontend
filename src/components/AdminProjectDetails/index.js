@@ -83,7 +83,6 @@ const AdminProjectDetails = () => {
   const handleEnableButtonClick = () => {
     // let { projectDetails } = this.state;
     // const { projectID } = this.props.match.params;
-    console.log(details);
 
     try {
       if (details.disabled) {
@@ -158,7 +157,7 @@ const AdminProjectDetails = () => {
                   {/* Project information */}
                   <section className={styles.DetailsSection}>
                     <div className="SectionTitle">Project Information</div>
-                    <div className={styles.ProjectInstructions}>
+                    <div className={"ProjectInstructions BigCard"}>
                       <div className={styles.ProjectInfo}>
                         <div className={styles.ProjectInfoHeader}>
                           <div className={styles.AvatarName}>
@@ -236,7 +235,7 @@ const AdminProjectDetails = () => {
                   {/* Membership */}
                   <section className={styles.DetailsSection}>
                     <div className="SectionTitle">Membership</div>
-                    <div className={styles.ProjectInstructions}>
+                    <div className={"ProjectInstructions BigCard"}>
                       <>
                         <div className={styles.MembershipHeader}>
                           <div className={styles.MemberSection}>
@@ -303,7 +302,7 @@ const AdminProjectDetails = () => {
 
                   <div className="AdminDBSections">
                     <div className="SectionTitle">Manage Project</div>
-                    <div className="ProjectInstructions">
+                    <div className="ProjectInstructions BigCard">
                       <div className="MemberBody">
                         <SettingsActionRow
                           title={`${
