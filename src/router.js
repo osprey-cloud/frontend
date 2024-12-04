@@ -200,6 +200,12 @@ const Routes = () => {
         <ProtectedRoute
           isAllowed={hasToken}
           exact
+          path="/projects/:projectID/apps/:appID/experiments/:experimentID/details"
+          component={NotebookExperimentPage}
+        />
+        <ProtectedRoute
+          isAllowed={hasToken}
+          exact
           path="/projects/:projectID/apps/:appID/deployments"
           component={NotebookExperimentPage}
         />

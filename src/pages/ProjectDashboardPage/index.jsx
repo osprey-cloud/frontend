@@ -29,7 +29,7 @@ import PrimaryButton from "../../components/PrimaryButton";
 import Feedback from "../../components/Feedback";
 import Spinner from "../../components/Spinner";
 import { useMutation } from "@tanstack/react-query";
-import { useAppDeployment } from "../../hooks/useAppDeploymentMutation";
+import { useMlDeployment } from "../../hooks/useAppDeploymentMutation";
 import { validateName } from "../../helpers/validation";
 
 const ProjectDashboardPage = () => {
@@ -55,9 +55,9 @@ const ProjectDashboardPage = () => {
     isSuccess: deploymentSuccess,
     error: deploymentError,
     isPending: deploymentPending,
-    mutate: deployApp,
+    mutate: deployMLApp,
   } = useMutation({
-    mutationFn: useAppDeployment,
+    mutationFn: useMlDeployment,
   });
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const ProjectDashboardPage = () => {
     localStorage.setItem("project", JSON.stringify(projectDetails));
   }, [projectDetails]);
 
-  const handleJupyterNotebookDeployment = async () => {
+  const handleJupyterNotebookDeployment = () => {
     if (!jupiterNoteBookName) {
       setValidationError("Please enter a name for the app");
     }
@@ -103,12 +103,13 @@ const ProjectDashboardPage = () => {
       is_notebook: true,
       projectID: projectID,
     };
-    await deployApp(data);
+    deployMLApp(data);
   };
 
   useEffect(() => {
     if (deploymentSuccess) {
-      history.push(`/projects`);
+      setOpenJupyterNotebookModel(false);
+      window.location.reload();
     }
   }, [deploymentSuccess]);
 

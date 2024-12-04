@@ -1,0 +1,160 @@
+.pageContainer {
+    padding: 20px;
+}
+
+.SummaryCardContainer {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #cccccc;
+    margin-top: 20px;
+}
+
+.SummaryCardDimentions {
+    min-width: 100%;
+    display: flex;
+    border-radius: 15px;
+}
+
+.CardHeaderSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #cccccc;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.CardTitle {
+    width: 100%;
+}
+
+.CardBodySection {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    align-items: center;
+    padding: 1rem 2rem;
+    min-height: 10rem;
+}
+
+.InnerCard {
+    display: grid;
+    grid-template-columns: 7fr 1fr 7fr 1fr 7fr;
+    grid-template-rows: auto;
+    grid-gap: 1rem;
+    overflow-x: auto;
+    width: -webkit-fill-available;
+}
+
+.InnerCardSections {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.2rem;
+}
+
+.InnerContentGrid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 0.3rem;
+}
+
+.InnerTitlesStart {
+    color: #000;
+    font-weight: bold;
+    text-align: start;
+    padding: 1rem 1rem 0rem 0rem;
+}
+
+.InnerTitlesMiddle {
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.InnerContentStatus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: .5rem;
+    color: #555;
+}
+
+.InnerTitlesEnd {
+    color: #000;
+    font-weight: bold;
+    text-align: end;
+    padding-top: 1rem;
+}
+
+.InnerContentEnd {
+    text-align: end;
+}
+
+.InnerContentAge {
+    text-align: center;
+}
+
+.BackClickItem {
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--primary-color)
+}
+
+.BackClickItem:hover {
+    text-decoration: underline;
+}
+
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.Title {
+    font-size: 24px;
+}
+
+.BackButtonSection {
+    display: flex;
+    justify-self: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+.noDataSection>p {
+    font-size: 0.9rem;
+    margin-top: -10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: hidden;
+    height: 30vh;
+}
+
+.DescriptionArea {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.editLink {
+    color: var(--primary-color);
+}
+
+.editLink:hover {
+    cursor: pointer;
+}

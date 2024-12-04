@@ -3,6 +3,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .Title {
@@ -12,7 +14,8 @@
 
 .Description {
     font-size: 14px;
-    color: #666;
+    color: #747272;
+    padding-left: 0.5rem;
 }
 
 .RightDashboardButtons {
@@ -20,48 +23,37 @@
     gap: 2rem;
 }
 
-.editButton {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.filters {
+.FiltersSection {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
-.searchBar {
-    flex: 1;
-    padding: 8px;
-    margin-right: 10px;
+.createExperimentActionButtonsContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    gap: 20px
+}
+
+.SearchBar {
+    padding: 0.5rem;
+    width: 40%;
+    margin-right: 26px;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
-.selectGroup {
+.SelectGroup {
     display: flex;
-    gap: 10px;
+    gap: 20px;
+    width: 60%;
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.tableHeader {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-
-.tableCell {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+.SelectGroup:hover {
+    cursor: pointer;
 }
 
 .success {
@@ -76,4 +68,48 @@
 
 .rowHover {
     background-color: #f9f9f9;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 16px;
+}
+
+.tabs>button {
+    border-radius: 0;
+}
+
+.noDataSection>p {
+    font-size: 0.9rem;
+    margin-top: -10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: hidden;
+    height: 30vh;
+}
+
+.activeTab {
+    border-bottom: 4px solid var(--primary-color);
+    font-weight: bold;
+}
+
+.content {
+    font-family: monospace;
+    background: #f9f9f9;
+    padding: 10px;
+    overflow-x: auto;
 }
