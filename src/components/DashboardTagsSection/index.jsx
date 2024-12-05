@@ -6,13 +6,11 @@ import PrimaryButton from "../PrimaryButton";
 import TagsModal from "../TagsModal";
 import { useTags } from "../../hooks/useTags";
 
-const TagsList = () => {
+const TagsList = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const { data: tags, isLoading: isLoadingTags } = useTags();
-
-  console.log("tags", tags);
-
+  const {title}=props;
   const handleViewMore = () => {
     setShowModal(true);
   };
@@ -23,7 +21,7 @@ const TagsList = () => {
 
   return (
     <div className={styles.featuredProjects}>
-      <h2>Suggested Tags</h2>
+      <h2>{title?? "Suggested Tags"}</h2>
       <div className={styles.grid}>
         {isLoadingTags ? (
           <div className={styles.noActivity}>

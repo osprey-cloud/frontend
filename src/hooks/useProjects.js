@@ -9,8 +9,6 @@ export const useProjects = (page, keyword = "") => {
       link = `/projects?page=${page}`;
     }
   
-    console.log("link", link);
-  
     return useQuery({
       queryFn: () => api.get(link),
       queryKey: ["userProjects"],
