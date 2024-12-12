@@ -13,7 +13,7 @@ const TagsModal = ({ tags, onClose, isModalTag }) => {
           </button>
         </div>
         <div className={styles.grid}>
-          {tags?.map((tag) => (
+           {tags?.map((tag) => (
             <TagCard
               key={tag.id}
               name={tag.name}
@@ -21,6 +21,7 @@ const TagsModal = ({ tags, onClose, isModalTag }) => {
               isFollowing={tag.is_following}
               id={tag.id}
               isModalTag={isModalTag}
+              onClose={onClose}
             />
           ))}
         </div>

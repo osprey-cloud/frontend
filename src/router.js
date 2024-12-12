@@ -75,6 +75,7 @@ import CreateAIAppPage from "./pages/createAIAppPage";
 
 import { handleGetRequest } from "./apis/apis";
 import UsersDashboardPage from "./pages/UsersDashboard";
+import TagDetailsPage from "./pages/TagDetailsPage";
 import NotebookExperimentPage from "./pages/NotebookExperimentPage";
 
 // Protected route should have token. If not, login.
@@ -262,6 +263,12 @@ const Routes = () => {
           exact
           path="/projects/:projectID/settings"
           component={ProjectSettingsPage}
+        />
+        <ProtectedRoute
+          isAllowed={hasToken}
+          exact
+          path="/tags/:tagID/details"
+          component={TagDetailsPage}
         />
         <ProtectedRoute
           isAllowed={hasToken && isAdmin}

@@ -1,0 +1,186 @@
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.tagDetailsSection {
+    flex: 1 1 72%;
+    /* min-width: 200px; */
+    /* position: sticky; */
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+.tagDetailsSection>.tagDetailsCard{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+.gridDescription {
+    grid-column: 1 / -1;
+  }
+.moreTagsSection {
+    flex: 1 1 28%;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.moreTagsSection > .tagDetailsCard{
+    width: auto;
+}
+.moreTagsSection >h1{
+    text-align: center;
+}
+.tagDetailsCard {
+    background-color: #f8f9fa;
+    /* padding: 0.2rem 1rem 1rem 1rem; */
+    border-radius: 8px;
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+
+.tagDetailsHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid gray;
+}
+
+.tagName {
+    font-size: 23px;
+    font-weight: bolder;
+    color: var(--primary-color);
+}
+
+.tagDetailsSubHeader {
+    display: flex;
+    gap: 3rem;
+    margin-left: 2rem;
+    padding-bottom: 1rem;
+}
+
+.followButton {
+    background-color: var(--secondary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.card {
+    position: relative;
+    background-color: #ffff;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 10px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tagName {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    text-transform: capitalize;
+}
+
+.statItem {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    display: flex;
+    width: fit-content;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.statItem p,
+.statItem span {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+.followButtonArea {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    min-width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.followButton {
+    background-color: var(--secondary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+.modalFollowButton >.followButton{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.FooterRow {
+    background-color: var(--gray-bg-light-color);
+    display: flex;
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+.FooterRow>div>a{
+    text-decoration: none;
+    color:var(--primary-color);
+    margin: 10px;
+}
+.membersIcon{
+    margin-right: 5px;
+}
+.iconSection{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:10px;
+}
+
+@media (max-width: 700px) {
+    .dashboard {
+      justify-content: center; 
+    }
+  
+    .tagDetailsSection, .moreTagsSection {
+      margin: 10px;
+      height: auto;
+      max-width: auto;
+      min-width: 100%;
+    }
+    .card{
+        width:200px;
+    }
+    .cardContent{
+        width:180px;
+    }
+    .tagName{
+        width: 120px;
+        font-size: 1rem;
+    }
+    .FooterRow{
+        display: block;
+        margin: 25px;
+    }
+  }
