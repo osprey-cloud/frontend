@@ -2,17 +2,16 @@ import axios from "../../axios";
 import {
   ADMIN_GETTING_ALL_APPS,
   ADMIN_ALL_APPS_FAIL,
-  ADMIN_ALL_APPS_SUCCESS
+  ADMIN_ALL_APPS_SUCCESS,
 } from "./actionTypes";
 
-import LRU  from "lru-cache";
+import LRU from "lru-cache";
 const cache = new LRU({
-  max: 50, 
-  ttl: 60 * 60 * 1000, 
+  max: 50,
+  ttl: 60 * 60 * 1000,
 });
 
 let currentCacheKey = null;
-
 
 export const startGettingApps = () => ({
   type: ADMIN_GETTING_ALL_APPS,
@@ -31,7 +30,7 @@ export const getAppsFail = (error) => ({
   },
 });
 
-const getAppsList = (page,keyword='') => async (dispatch) => {
+const getAppsList = (page, keywords) => async (dispatch) => {
   dispatch(startGettingApps());
   // try {
   //   const response = await axios.get(`/apps?page=${page}`);
@@ -40,8 +39,8 @@ const getAppsList = (page,keyword='') => async (dispatch) => {
   //   dispatch(getAppsFail(error));
   // }
 
-  const cacheKey = `${page}_${keyword}`;
-  currentCacheKey=cacheKey;
+  const cacheKey = `${page}_${keywords}`;
+  currentCacheKey = cacheKey;
 
   // Check if the data is already cached
   const cachedResponse = cache.get(cacheKey);
@@ -51,18 +50,18 @@ const getAppsList = (page,keyword='') => async (dispatch) => {
   }
 
   let link;
-  if (keyword) {
-    link = `/apps?page=${page}&keywords=${keyword}`;
+  if (keywords) {
+    link = `/search?keywords=${keywords}`;
   } else {
     link = `/apps?page=${page}`;
   }
-  
+
   // Run the API call in the background to fetch updated data
   const backgroundRequest = axios.get(link).then((response) => {
     cache.set(cacheKey, response); // Update the cache with new data
     //prevents background search from affecting the new search
-    if(cacheKey === currentCacheKey){
-    dispatch(getAppsSuccess(response));
+    if (cacheKey === currentCacheKey) {
+      dispatch(getAppsSuccess(response));
     }
   });
 
@@ -75,7 +74,6 @@ const getAppsList = (page,keyword='') => async (dispatch) => {
   return backgroundRequest.catch((error) => {
     dispatch(getAppsFail(error));
   });
-
 };
 
 export default getAppsList;

@@ -72,27 +72,11 @@ const AdminAppsPage = () => {
   };
 
   const gettingApps = useCallback(
-    (page, keyword = "") => dispatch(getAppsList(page, keyword)),
-    [dispatch]
+    () => dispatch(getAppsList(currentPage, word)),
+    [currentPage, dispatch, word]
   );
-
-  const searchThroughAccounts = (keyword) => {
-    handleChangePage(1);
-    gettingApps(1, keyword);
-  };
-
-  const handleCallbackSearchword = ({ target }) => {
-    const { value } = target;
-    setWord(value);
-    if (value !== "") {
-      searchThroughAccounts(value);
-    }
-    if (value === "") {
-      // setSearchList([]);
-      handleChangePage(1);
-      gettingApps(1);
-    }
-  };
+  
+  const handleCallbackSearchword = ({ target: { value } }) => setWord(value);
 
   const handlePageChange = (currentPage) => {
     handleChangePage(currentPage);
