@@ -8,159 +8,162 @@
   flex-direction: column;
 }
 
-.createAIAppTabletContainer{
-    display: flex;
-    flex-direction: row;
-    column-gap: 2rem;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 7px;
-    height: 7rem;
-    margin-top: 2rem;
-    align-items: center;
-    padding: 1rem 2rem;
-}
-.CreateAIAppGuidingTextContainer{
-    display: flex;
-    flex-direction: column;
-}
-.CreateAIAppGuidingTextTitle{
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #000000;
-}
-.createAIAppActionButtonsContainer{
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    position: relative;
+.createAIAppTabletContainer {
+  display: flex;
+  flex-direction: row;
+  column-gap: 2rem;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+  height: 7rem;
+  margin-top: 2rem;
+  align-items: center;
+  padding: 1rem 2rem;
 }
 
-.createAIAppTrainedModelGetStartedContainer{
+.CreateAIAppGuidingTextContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.CreateAIAppGuidingTextTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.createAIAppActionButtonsContainer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+}
+
+.createAIAppTrainedModelGetStartedContainer {
   display: flex;
   background-color: #fff;
   flex-direction: column;
   gap: 1rem;
 }
-.CreateAIAppGuidingTextSubTextContainer{
-    row-gap: 0.5rem;
+
+.CreateAIAppGuidingTextSubTextContainer {
+  row-gap: 0.5rem;
 }
 
-.createAIAppTrainedModelConfirmationContainer{ 
+.createAIAppTrainedModelConfirmationContainer {
   left: 0;
   display: flex;
   flex-direction: row;
   column-gap: 2rem;
 }
-.createAIAppJupyterNotebookModalContainer{
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-}
-.createAIAppJupyterNotebookModalTitle{
-    font-size: 1.7rem;
-    font-weight: 600;
-    color: #000000;
-    width: 100%;
-    border-bottom: 1px solid #000000;
-}
-.createAIAppJupyterNotebookModalForm{
-    gap: 1rem;
-    display: flex;
-    flex-direction: column;
+
+.createAIAppJupyterNotebookModalContainer {
+  display: flex;
+  flex-direction: column;
 }
 
+.createAIAppJupyterNotebookModalTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #000000;
+  width: 100%;
+}
 
-  
-  .formGroup {
-    margin-bottom: 25px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  
-  .formGroup label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    font-size: 15px;
-    max-width: 18rem;
-    color: #000;
-  }
-  
-  .formGroup input{
-    width: 50%;
-    padding: 8px;
-    row-gap: 0.7rem;
-    border: 1px solid #000;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #000;
-  }
-  .formGroupSelect{
-    width: 50%;
-  }
+.createAIAppJupyterNotebookModalForm {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
 
-  .EnvsformGroup{
-    margin-bottom: 15px;
-  }
-  
-  .envVarRow {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .envVarRow input {
-    flex: 1;
-    margin-right: 10px;
-  }
-  
-  .envVarRow button {
-    padding: 5px 10px;
-    color: white;
-    background-color: #d9534f;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .envVarRow button:hover {
-    background-color: #c9302c;
-  }
-  
-  .envVarActions {
-    display: flex;
-    gap: 2rem;
-    margin-top: 10px;
-  }
-  
-  .envVarActions button {
-    background-color: #5bc0de;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    color: white;
-  }
-  
-  .envVarActions button:hover {
-    background-color: #31b0d5;
-  }
+.formGroup {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
-  .PrivateImageCheckField{
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    align-items: flex-start;
-    margin-bottom: 10px;
-  }
-  .PrivateImageTabContainer{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 15px;
+  max-width: 18rem;
+  color: #000;
+}
 
+.formGroup input {
+  width: 50%;
+  padding: 8px;
+  row-gap: 0.7rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #000;
+}
 
+.formGroupSelect {
+  width: 50%;
+}
+
+.EnvsformGroup {
+  margin-bottom: 15px;
+}
+
+.envVarRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.envVarRow input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.envVarRow button {
+  padding: 5px 10px;
+  color: white;
+  background-color: #d9534f;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.envVarRow button:hover {
+  background-color: #c9302c;
+}
+
+.envVarActions {
+  display: flex;
+  gap: 2rem;
+  margin-top: 10px;
+}
+
+.envVarActions button {
+  background-color: #5bc0de;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+}
+
+.envVarActions button:hover {
+  background-color: #31b0d5;
+}
+
+.PrivateImageCheckField {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.PrivateImageTabContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
