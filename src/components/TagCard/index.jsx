@@ -23,6 +23,7 @@ const TagCard = ({ id, isModalTag, onClose }) => {
   const { data: tag, isLoading } = useTag(id);
   if (isLoading) <p>loading...</p>;
 
+
   const followTagMutation = useMutation({
     mutationFn: () => axios.post(`tags/${id}/following`, {}),
     onMutate: () => {

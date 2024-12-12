@@ -35,7 +35,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min.js";
 
 const ProjectSettingsPage = () => {
-  const {data} = useSelector((state) => state.user);
+  const { data } = useSelector((state) => state.user);
   const { projectID } = useParams();
   const projectInfo = { ...JSON.parse(localStorage.getItem("project")) };
   const { name, description, organisation, project_type, age } = projectInfo;
@@ -86,7 +86,6 @@ const ProjectSettingsPage = () => {
     disableProjectAlert: false,
     disableProjectProgress: false,
     projectDetails: [],
-    
   });
 
   const [removedTags, setRemovedTags] = useState([]);
@@ -114,9 +113,7 @@ const ProjectSettingsPage = () => {
     }));
   };
 
-
   const checkMembership = () => {
-    
     const { projectUsers } = state;
     const result = projectUsers?.filter((item) => item.user?.id === data.id);
     //either member or admin
@@ -146,7 +143,6 @@ const ProjectSettingsPage = () => {
       }));
     }
   };
-
 
   const getProjectMemberz = () => {
     handleGetRequest(`/projects/${projectID}/users`)
@@ -232,15 +228,12 @@ const ProjectSettingsPage = () => {
       });
   };
 
-
   const hideDeleteAlert = () => {
     setState((prevState) => ({
       ...prevState,
       openDeleteAlert: false,
     }));
   };
-
-
 
   const showRemoveMemberModal = (email) => {
     setState((prevState) => ({
@@ -359,7 +352,6 @@ const ProjectSettingsPage = () => {
       });
   };
 
- 
   const handleSubmit = () => {
     const {
       projectName,
@@ -369,28 +361,28 @@ const ProjectSettingsPage = () => {
       otherType,
       othersBool,
     } = state;
-  
+
     const projectInfo = JSON.parse(localStorage.getItem("project")) || {};
     const { name, description, organisation, project_type } = projectInfo;
-  
+
     const trim = (input) => input.trim();
     const capitalizeFirstLetter = (input) =>
       input.charAt(0).toUpperCase() + input.slice(1);
-  
+
     const trimmedProjectName = trim(projectName);
     const trimmedProjectDescription = trim(projectDescription);
     const trimmedProjectOrganisation = trim(projectOrganisation);
     const trimmedProjectType = trim(
       capitalizeFirstLetter(othersBool ? otherType : projectType)
     );
-  
+
     const hasEmptyField =
       !trimmedProjectName ||
       !trimmedProjectDescription ||
       !trimmedProjectOrganisation ||
       !trimmedProjectType ||
       (removedTags.length === 0 && newTags.length === 0);
-  
+
     if (hasEmptyField) {
       setState((prevState) => ({
         ...prevState,
@@ -399,9 +391,9 @@ const ProjectSettingsPage = () => {
       }));
       return;
     }
-  
+
     const newProject = {};
-  
+
     if (trimmedProjectName !== name) {
       newProject.name = trimmedProjectName;
     }
@@ -420,7 +412,7 @@ const ProjectSettingsPage = () => {
     if (newTags.length > 0) {
       newProject.tags_add = newTags;
     }
-  
+
     if (Object.keys(newProject).length === 0) {
       setState((prevState) => ({
         ...prevState,
@@ -428,28 +420,38 @@ const ProjectSettingsPage = () => {
       }));
       return;
     }
-  
-    const nameCheckResult = checkProjectInputValidity(trimmedProjectName, "name");
-    const organisationCheckResult = checkProjectInputValidity(trimmedProjectOrganisation, "organisation");
-    const typeCheckResult = checkProjectInputValidity(trimmedProjectType, "type");
-  
+
+    const nameCheckResult = checkProjectInputValidity(
+      trimmedProjectName,
+      "name"
+    );
+    const organisationCheckResult = checkProjectInputValidity(
+      trimmedProjectOrganisation,
+      "organisation"
+    );
+    const typeCheckResult = checkProjectInputValidity(
+      trimmedProjectType,
+      "type"
+    );
+
     if (nameCheckResult) {
       setState((prevState) => ({ ...prevState, error: nameCheckResult }));
       return;
     }
     if (organisationCheckResult) {
-      setState((prevState) => ({ ...prevState, error: organisationCheckResult }));
+      setState((prevState) => ({
+        ...prevState,
+        error: organisationCheckResult,
+      }));
       return;
     }
     if (typeCheckResult) {
       setState((prevState) => ({ ...prevState, error: typeCheckResult }));
       return;
     }
-  
+
     updateProjectDetails(projectID, newProject);
   };
-  
-  
 
   const nameOnClick = (e) => {
     const projectInfo = { ...JSON.parse(localStorage.getItem("project")) };
@@ -462,7 +464,6 @@ const ProjectSettingsPage = () => {
     e.preventDefault();
   };
 
- 
   const deleteThisProject = (projectID) => {
     setState((prevState) => ({
       ...prevState,
@@ -487,7 +488,6 @@ const ProjectSettingsPage = () => {
     deleteThisProject(projectID);
   };
   const getProjectDetails = () => {
-
     handleGetRequest(`/projects/${projectID}`)
       .then((response) => {
         setState((prevState) => ({
@@ -596,756 +596,721 @@ const ProjectSettingsPage = () => {
         openRoleUpdateAlert: false,
       }));
     }
-  }
+  };
 
-  
-    const handleTypeSelectChange = (selected) => {
-      const { othersBool } = state;
-      if (selected.id === 6) {
-        if (!othersBool) {
-          setState((prevState) => ({
-            ...prevState,
-            othersBool: true,
-          }));
-        }
-      } else {
+  const handleTypeSelectChange = (selected) => {
+    const { othersBool } = state;
+    if (selected.id === 6) {
+      if (!othersBool) {
         setState((prevState) => ({
           ...prevState,
-          projectType: selected.value,
+          othersBool: true,
         }));
-        if (othersBool) {
-          setState((prevState) => ({
-            ...prevState,
-            othersBool: false,
-          }));
-        }
       }
-    };
-    const handleInvitationRole = (selected) => {
+    } else {
       setState((prevState) => ({
         ...prevState,
-        role: selected.value,
+        projectType: selected.value,
       }));
-    };
+      if (othersBool) {
+        setState((prevState) => ({
+          ...prevState,
+          othersBool: false,
+        }));
+      }
+    }
+  };
+  const handleInvitationRole = (selected) => {
+    setState((prevState) => ({
+      ...prevState,
+      role: selected.value,
+    }));
+  };
 
-    const handleOrganisationSelectChange = (selected) => {
-      setState((prevState) => ({
-        ...prevState,
-        projectOrganisation: selected.value,
-      }));
-    };
+  const handleOrganisationSelectChange = (selected) => {
+    setState((prevState) => ({
+      ...prevState,
+      projectOrganisation: selected.value,
+    }));
+  };
 
-   
-    const updateRoleValue = (string) => {
-      let role = string[1];
-      return role.charAt(0).toUpperCase() + role.slice(1);
-    };
+  const updateRoleValue = (string) => {
+    let role = string[1];
+    return role.charAt(0).toUpperCase() + role.slice(1);
+  };
 
-    const onTagsChange = (tags) => {
-      if(state?.projectDetails?.tags){
-        const oldTagNames = state?.projectDetails?.tags?.map(tag => tag.name);
-        const removed = oldTagNames.filter(tag => !tags.includes(tag));
-        setRemovedTags(removed);
-        setNewTags(tags);
-       }
-    
-    };
+  const onTagsChange = (tags) => {
+    if (state?.projectDetails?.tags) {
+      const oldTagNames = state?.projectDetails?.tags?.map((tag) => tag.name);
+      const removed = oldTagNames.filter((tag) => !tags.includes(tag));
+      setRemovedTags(removed);
+      setNewTags(tags);
+    }
+  };
 
-    let currentUserEmail = data.email;
+  let currentUserEmail = data.email;
 
-    const {
-      openUpdateAlert,
-      openDeleteAlert,
-      openRoleUpdateAlert,
-      projectName,
-      projectDescription,
-      projectAge,
-      error,
-      Confirmprojectname,
-      disableDelete,
-      projectOrganisation,
-      projectType,
-      othersBool,
-      otherType,
-      nameChecked,
-      // idChecked,
-      // descriptionChecked,
-      showInviteModel,
-      email,
-      role,
-      currentUserIsAdminOrMember,
-      removeMemberModal,
-      projectUsers,
-      projectUnregisteredUsers,
-      currentUserIsAdminOrOwner,
-      currentUserIsMemberOnly,
-      fetchingProjectMembers,
-      invitingMembers,
-      invitingMembersError,
-      updateMemberError,
-      updatingMemberRole,
-      removingMember,
-      removeMemberError,
-      updatingProjectDetails,
-      deletingProject,
-      deleteProjectError,
-      disableProjectError,
-      disableProjectAlert,
-      disableProjectProgress,
-    } = state;
-    const types = retrieveProjectTypes();
-    const roles = retrieveMembershipRoles();
+  const {
+    openUpdateAlert,
+    openDeleteAlert,
+    openRoleUpdateAlert,
+    projectName,
+    projectDescription,
+    projectAge,
+    error,
+    Confirmprojectname,
+    disableDelete,
+    projectOrganisation,
+    projectType,
+    othersBool,
+    otherType,
+    nameChecked,
+    // idChecked,
+    // descriptionChecked,
+    showInviteModel,
+    email,
+    role,
+    currentUserIsAdminOrMember,
+    removeMemberModal,
+    projectUsers,
+    projectUnregisteredUsers,
+    currentUserIsAdminOrOwner,
+    currentUserIsMemberOnly,
+    fetchingProjectMembers,
+    invitingMembers,
+    invitingMembersError,
+    updateMemberError,
+    updatingMemberRole,
+    removingMember,
+    removeMemberError,
+    updatingProjectDetails,
+    deletingProject,
+    deleteProjectError,
+    disableProjectError,
+    disableProjectAlert,
+    disableProjectProgress,
+  } = state;
+  const types = retrieveProjectTypes();
+  const roles = retrieveMembershipRoles();
 
-    const presetOrganisations = namedOrganisations();
+  const presetOrganisations = namedOrganisations();
 
-    return (
-      <DashboardLayout name={name} header="Project Settings" short>
-        <div className="SectionTitle">Project Details</div>
-        <div className={`${styles.ProjectInstructions}`}>
-          <div className={`${styles.ProjectsDetailsInnerSection}`}>
-            <div className={styles.InnerContentGrid}>
-              <div className={`${styles.SectionSubTitle}`}>Project Name</div>
+  return (
+    <DashboardLayout name={name} header="Project Settings" short>
+      <div className="SectionTitle">Project Details</div>
+      <div className={`ProjectInstructions BigCard`}>
+        <div className={`${styles.ProjectsDetailsInnerSection}`}>
+          <div className={styles.InnerContentGrid}>
+            <div className={`${styles.SectionSubTitle}`}>Project Name</div>
+            <div className={styles.ProjectButtonRow}>
+              <div className={`${styles.SettingsSectionInfo}`}>
+                <div>{projectName}</div>
+              </div>
+              <div className={styles.CopyIcon}>
+                <CopyText onClick={nameOnClick} />
+                {nameChecked ? <Checked /> : null}
+              </div>
+            </div>
+            <div>
+              <div className={`${styles.SectionSubTitle}`}>
+                Project Description
+              </div>
               <div className={styles.ProjectButtonRow}>
-                <div className={`${styles.SettingsSectionInfo}`}>
-                  <div>{projectName}</div>
-                </div>
-                <div className={styles.CopyIcon}>
-                  <CopyText onClick={nameOnClick} />
-                  {nameChecked ? <Checked /> : null}
-                </div>
-              </div>
-              <div>
-                <div className={`${styles.SectionSubTitle}`}>
-                  Project Description
-                </div>
-                <div className={styles.ProjectButtonRow}>
-                  <div className={styles.SettingsSectionInfo}>
-                    <div>{projectDescription}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.InnerContentGrid}>
-              <div>
-                <div className={`${styles.SectionSubTitle}`}>Organization</div>
-                <div className={styles.ProjectButtonRow}>
-                  <div className={styles.SettingsSectionInfo}>
-                    <div>{projectOrganisation}</div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className={`${styles.SectionSubTitle}`}>Age</div>
-                <div className={styles.ProjectButtonRow}>
-                  <div className={styles.SettingsSectionInfo}>
-                    <div>{projectAge}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.InnerContentGrid}>
-              <div>
-                <div className={`${styles.SectionSubTitle}`}>Project Type</div>
-                <div className={styles.ProjectButtonRow}>
-                  <div className={styles.SettingsSectionInfo}>
-                    <div>{projectType}</div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className={`${styles.SectionSubTitle}`}>Status</div>
-                <div className={styles.ProjectButtonRow}>
-                  <div className={styles.SettingsSectionInfo}>
-                    <div>
-                      {state.projectDetails?.disabled === true ? (
-                        <span style={{ color: "red" }}>Disabled</span>
-                      ) : (
-                        "Enabled"
-                      )}
-                    </div>
-                  </div>
+                <div className={styles.SettingsSectionInfo}>
+                  <div>{projectDescription}</div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className={`${styles.SectionSubTitle}`}>Membership</div>
-        <div className={styles.ProjectInstructions}>
-          {fetchingProjectMembers ? (
-            <Spinner />
-          ) : (
-            <>
-              <div className={styles.MembershipHeader}>
-                <div className={styles.MemberSection}>
-                  <div className={styles.SettingsSectionInfoHeader}>
-                    {projectUsers?.length === 1 ? (
-                      <div className="SectionSubTitle">
-                        Project has 1 Team Member
-                      </div>
+          <div className={styles.InnerContentGrid}>
+            <div>
+              <div className={`${styles.SectionSubTitle}`}>Organization</div>
+              <div className={styles.ProjectButtonRow}>
+                <div className={styles.SettingsSectionInfo}>
+                  <div>{projectOrganisation}</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className={`${styles.SectionSubTitle}`}>Age</div>
+              <div className={styles.ProjectButtonRow}>
+                <div className={styles.SettingsSectionInfo}>
+                  <div>{projectAge}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.InnerContentGrid}>
+            <div>
+              <div className={`${styles.SectionSubTitle}`}>Project Type</div>
+              <div className={styles.ProjectButtonRow}>
+                <div className={styles.SettingsSectionInfo}>
+                  <div>{projectType}</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className={`${styles.SectionSubTitle}`}>Status</div>
+              <div className={styles.ProjectButtonRow}>
+                <div className={styles.SettingsSectionInfo}>
+                  <div>
+                    {state.projectDetails?.disabled === true ? (
+                      <span style={{ color: "red" }}>Disabled</span>
                     ) : (
-                      <div>Project has {projectUsers?.length} Team Members</div>
+                      "Enabled"
                     )}
                   </div>
-                  <div className="SubText" style={{ maxWidth: "90%" }}>
-                    Members that have accounts on crane cloud can perform
-                    different operations on the project depending on their
-                    permission.
-                  </div>
                 </div>
-                {currentUserIsAdminOrOwner && (
-                  <PrimaryButton
-                    // className={styles.SettingsButton}
-                    color="primary"
-                    onClick={() => {
-                      showInviteMenu();
-                    }}
-                  >
-                    Invite member
-                  </PrimaryButton>
-                )}
-              </div>
-              <div className={styles.MemberTable}>
-                <div className={styles.MemberBody}>
-                  {projectUsers?.map((entry, index) => (
-                    <div className={styles.MemberTableRow} key={index}>
-                      <div className={styles.MemberInfo}>
-                        <Avatar
-                          name={entry.user.name}
-                          className={styles.MemberAvatar}
-                        />
-                        <div className={styles.MemberNameEmail}>
-                          <div className={styles.UserHeader}>
-                            {entry.user.name}
-                          </div>
-                          <div className={styles.Wrap}>{entry.user.email}</div>
-                        </div>
-                      </div>
-                      {entry.role !== "RolesList.owner" &&
-                        entry.accepted_collaboration_invite === false && (
-                          <div className="SubText">Pending Invitation</div>
-                        )}
-                      <div className={styles.MemberOptions}>
-                        <div
-                          className={styles.MemberRole}
-                          onClick={() => {
-                            !currentUserIsMemberOnly &&
-                              updateRoleAlert(entry.user.email);
-                          }}
-                          title="Change Role"
-                        >
-                          <span>Role:</span>
-                          {updateRoleValue(entry.role.split("."))}
-                        </div>
-                        <div>
-                          {entry.user.email === currentUserEmail
-                            ? entry.role !== "RolesList.owner" && (
-                                <PrimaryButton
-                                  small
-                                  noPadding
-                                  transparent
-                                  onClick={() => {
-                                    showRemoveMemberModal(
-                                      entry.user.email
-                                    );
-                                  }}
-                                >
-                                  Leave
-                                </PrimaryButton>
-                              )
-                            : currentUserIsAdminOrOwner && (
-                                <PrimaryButton
-                                  small
-                                  noPadding
-                                  transparent
-                                  onClick={() => {
-                                    showRemoveMemberModal(
-                                      entry.user.email
-                                    );
-                                  }}
-                                >
-                                  Remove
-                                </PrimaryButton>
-                              )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              {projectUnregisteredUsers.length > 0 && (
-                <div className={styles.LowerSection}>
-                  <div className={styles.SettingsSectionInfoHeader}>
-                    Unregistered Members
-                  </div>
-                  <div className="SubText">
-                    Members invited to this project by email but have no crane
-                    cloud accounts.
-                  </div>
-
-                  <div className={styles.MemberTable}>
-                    <div className={styles.MemberBody}>
-                      {projectUnregisteredUsers?.map((entry, index) => (
-                        <div className={styles.MemberTableRow} key={index}>
-                          <div className={styles.MemberTableCell}>
-                            <div className={styles.NameSecting}>
-                              {
-                                <Avatar
-                                  name={entry.email}
-                                  className={styles.MemberAvatar}
-                                />
-                              }
-                              {/* <div className={styles.MemberNameEmail}> */}
-                              <div className={styles.Wrap}>{entry.email}</div>
-
-                              {/* </div> */}
-                            </div>
-                          </div>
-                          <div className={styles.MemberActionArea}>
-                            <div className={styles.MemberTableCell}>
-                              <div className={styles.MemberRole}>
-                                <span>Role:</span>
-                                {entry.role}
-                              </div>
-                            </div>
-
-                            <div className={styles.OptionButtons}>
-                              <Send
-                                className={styles.SendButton}
-                                title="Resend Invite"
-                              />
-                              <Bin
-                                className={styles.BinButton}
-                                onClick={() => {
-                                  showRemoveMemberModal(entry.email);
-                                }}
-                                title="Delete Invite"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-        {openRoleUpdateAlert && (
-          <div className={styles.ProjectDeleteModel}>
-            <Modal
-              showModal={openRoleUpdateAlert}
-              onClickAway={hideRoleUpdateAlert}
-            >
-              <div>
-                <div className={styles.ModelHeader}>Change Member Role</div>
-                <div className={styles.UpdateForm}>
-                  <div className={styles.UpdateInputSection}>
-                    <div className={styles.DeleteDescription}>
-                      Search member (by email)
-                    </div>
-                    <BlackInputText
-                      placeholder="Enter email here"
-                      name="email"
-                      value={email}
-                      // should not be editable
-                      // onChange={(e) => {
-                      //   this.handleChange(e);
-                      // }}
-                    />
-                  </div>
-                  <div className={styles.UpdateInputSection}>
-                    <div className={styles.DeleteDescription}>
-                      Member Role (in connection with user permission)
-                    </div>
-                    <Select
-                      required
-                      placeholder={role ? role : "Choose membership role"}
-                      options={roles}
-                      onChange={handleInvitationRole}
-                    />
-                  </div>
-                  {updateMemberError && (
-                    <Feedback message={updateMemberError} type="error" />
-                  )}
-                  <div className={styles.SendInvitationButton}>
-                    <PrimaryButton
-                      onClick={handleMemberRoleUpdate}
-                      color="primary"
-                    >
-                      {updatingMemberRole ? <Spinner /> : "Update Role"}
-                    </PrimaryButton>
-                  </div>
-                </div>
-              </div>
-            </Modal>
-          </div>
-        )}
-        {currentUserIsAdminOrMember === false ? (
-          <>
-            <div className="SectionTitle">Manage Project</div>
-            <div className="ProjectInstructions">
-              <div className="MemberBody">
-                <SettingsActionRow
-                  title="Update Project"
-                  content="Modify the project name and description"
-                  buttonLabel="Update"
-                  disabled={fetchingProjectMembers}
-                  onButtonClick={showUpdateAlert}
-                  buttonColor="primary"
-                />
-
-                <SettingsActionRow
-                  title={`${
-                    state.projectDetails?.disabled ? "Enable" : "Disable"
-                  } project
-                  `}
-                  content={
-                    state.projectDetails?.disabled
-                      ? "Allow access to project resources and enable billing"
-                      : "Prevent project from being billed by blocking access to it's resources."
-                  }
-                  buttonLabel={
-                    state.projectDetails?.disabled ? "Enable" : "Disable"
-                  }
-                  buttonColor={
-                    state.projectDetails?.disabled ? "primary" : "red"
-                  }
-                  onButtonClick={() => {
-                    disableProjectAlertFunc(true);
-                  }}
-                />
-
-                <SettingsActionRow
-                  title="Delete Project"
-                  content="Take down your entire project, delete all apps under it."
-                  buttonLabel="Delete"
-                  buttonColor="red"
-                  onButtonClick={showDeleteAlert}
-                />
               </div>
             </div>
-          </>
-        ) : null} 
-
-        {openUpdateAlert && (
-          <div className={styles.ProjectDeleteModel}>
-            <Modal
-              showModal={openUpdateAlert}
-              onClickAway={hideUpdateAlert}
-            >
-              <div>
-                <div
-                  onSubmit={(e) => {
-                    handleSubmit();
-                    e.preventDefault();
+          </div>
+        </div>
+      </div>
+      <div className={`SectionTitle`}>Membership</div>
+      <div className={"ProjectInstructions BigCard"}>
+        {fetchingProjectMembers ? (
+          <Spinner />
+        ) : (
+          <>
+            <div className={styles.MembershipHeader}>
+              <div className={styles.MemberSection}>
+                <div className={styles.SettingsSectionInfoHeader}>
+                  {projectUsers?.length === 1 ? (
+                    <div className="SectionSubTitle">
+                      Project has 1 Team Member
+                    </div>
+                  ) : (
+                    <div>Project has {projectUsers?.length} Team Members</div>
+                  )}
+                </div>
+                <div className="SubText" style={{ maxWidth: "90%" }}>
+                  Members that have accounts on crane cloud can perform
+                  different operations on the project depending on their
+                  permission.
+                </div>
+              </div>
+              {currentUserIsAdminOrOwner && (
+                <PrimaryButton
+                  // className={styles.SettingsButton}
+                  color="primary"
+                  onClick={() => {
+                    showInviteMenu();
                   }}
                 >
-                  <div className={styles.UpdateForm}>
-                    <div className={styles.UpdateInputSection}>
-                      <div className={styles.DeleteDescription}>
-                        Project name
-                      </div>
-                      <BlackInputText
-                        placeholder="Project Name"
-                        name="projectName"
-                        value={projectName}
-                        onChange={(e) => {
-                          handleChange(e);
-                        }}
+                  Invite member
+                </PrimaryButton>
+              )}
+            </div>
+            <div className={styles.MemberTable}>
+              <div className={styles.MemberBody}>
+                {projectUsers?.map((entry, index) => (
+                  <div className={styles.MemberTableRow} key={index}>
+                    <div className={styles.MemberInfo}>
+                      <Avatar
+                        name={entry.user.name}
+                        className={styles.MemberAvatar}
                       />
+                      <div className={styles.MemberNameEmail}>
+                        <div className={styles.UserHeader}>
+                          {entry.user.name}
+                        </div>
+                        <div className={styles.Wrap}>{entry.user.email}</div>
+                      </div>
                     </div>
-                    <div className={styles.UpdateInputSection}>
-                      <div className={styles.DeleteDescription}>
-                        Organisation
-                      </div>
-                      <Select
-                        required
-                        placeholder={
-                          projectOrganisation
-                            ? projectOrganisation
-                            : "Update project Organization"
-                        }
-                        options={presetOrganisations}
-                        onChange={handleOrganisationSelectChange}
-                      />
-                      {othersBool && (
-                        <BlackInputText
-                          placeholder="Organisation"
-                          name="projectOrganisation"
-                          value={projectOrganisation}
-                          onChange={(e) => {
-                            handleChange(e);
-                          }}
-                        />
+                    {entry.role !== "RolesList.owner" &&
+                      entry.accepted_collaboration_invite === false && (
+                        <div className="SubText">Pending Invitation</div>
                       )}
-                    </div>
-                    <div className={styles.UpdateInputSection}>
-                      <div className={styles.DeleteDescription}>
-                        Project type
-                      </div>
-                      <Select
-                        required
-                        placeholder={
-                          projectType ? projectType : "Update project type"
-                        }
-                        options={types}
-                        onChange={handleTypeSelectChange}
-                      />
-                      {othersBool && (
-                        <BlackInputText
-                          required
-                          placeholder="Type of project"
-                          name="otherType"
-                          value={otherType}
-                          onChange={(e) => {
-                            handleChange(e);
-                          }}
-                        />
-                      )}
-                    </div>
-                    <div className={styles.UpdateInputSection}>
-                      <div className={styles.DeleteDescription}>
-                        Project tags
-                      </div>
-                      <div className={styles.ProjectInputTag}>
-                        <TagInput userTags={state?.projectDetails?.tags ?  state?.projectDetails?.tags?.map(tag => tag.name): []}  onTagsChange={onTagsChange}/>
-                      </div>
-                    </div>
-                    <div className={styles.UpdateInputSection}>
-                      <div className={styles.DeleteDescription}>
-                        Project description
-                      </div>
-                      <TextArea
-                        placeholder="Description"
-                        name="projectDescription"
-                        style={styles.TextArea}
-                        value={projectDescription}
-                        onChange={(e) => {
-                          handleChange(e);
+                    <div className={styles.MemberOptions}>
+                      <div
+                        className={styles.MemberRole}
+                        onClick={() => {
+                          !currentUserIsMemberOnly &&
+                            updateRoleAlert(entry.user.email);
                         }}
-                      />
-                    </div>
-                    {( error) && (
-                      <Feedback
-                        type="error"
-                        message={
-                          "Failed to update Project" 
-                        }
-                      />
-                    )}
-                    <div className={styles.UpdateProjectModelButtons}>
-                      <PrimaryButton
-                        className="CancelBtn"
-                        onClick={hideUpdateAlert}
+                        title="Change Role"
                       >
-                        Cancel
-                      </PrimaryButton>
-                      <PrimaryButton
-                        onClick={handleSubmit}
-                        color="primary"
-                      >
-                        {updatingProjectDetails ? (
-                          <Spinner />
-                        ) : (
-                          "update project"
-                        )}
-                      </PrimaryButton>
+                        <span>Role:</span>
+                        {updateRoleValue(entry.role.split("."))}
+                      </div>
+                      <div>
+                        {entry.user.email === currentUserEmail
+                          ? entry.role !== "RolesList.owner" && (
+                              <PrimaryButton
+                                small
+                                noPadding
+                                transparent
+                                onClick={() => {
+                                  showRemoveMemberModal(entry.user.email);
+                                }}
+                              >
+                                Leave
+                              </PrimaryButton>
+                            )
+                          : currentUserIsAdminOrOwner && (
+                              <PrimaryButton
+                                small
+                                noPadding
+                                transparent
+                                onClick={() => {
+                                  showRemoveMemberModal(entry.user.email);
+                                }}
+                              >
+                                Remove
+                              </PrimaryButton>
+                            )}
+                      </div>
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {projectUnregisteredUsers.length > 0 && (
+              <div className={styles.LowerSection}>
+                <div className={styles.SettingsSectionInfoHeader}>
+                  Unregistered Members
+                </div>
+                <div className="SubText">
+                  Members invited to this project by email but have no crane
+                  cloud accounts.
+                </div>
+
+                <div className={styles.MemberTable}>
+                  <div className={styles.MemberBody}>
+                    {projectUnregisteredUsers?.map((entry, index) => (
+                      <div className={styles.MemberTableRow} key={index}>
+                        <div className={styles.MemberTableCell}>
+                          <div className={styles.NameSecting}>
+                            {
+                              <Avatar
+                                name={entry.email}
+                                className={styles.MemberAvatar}
+                              />
+                            }
+                            {/* <div className={styles.MemberNameEmail}> */}
+                            <div className={styles.Wrap}>{entry.email}</div>
+
+                            {/* </div> */}
+                          </div>
+                        </div>
+                        <div className={styles.MemberActionArea}>
+                          <div className={styles.MemberTableCell}>
+                            <div className={styles.MemberRole}>
+                              <span>Role:</span>
+                              {entry.role}
+                            </div>
+                          </div>
+
+                          <div className={styles.OptionButtons}>
+                            <Send
+                              className={styles.SendButton}
+                              title="Resend Invite"
+                            />
+                            <Bin
+                              className={styles.BinButton}
+                              onClick={() => {
+                                showRemoveMemberModal(entry.email);
+                              }}
+                              title="Delete Invite"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-            </Modal>
-          </div>
+            )}
+          </>
         )}
-        {showInviteModel === true && (
-          <div className={styles.ProjectDeleteModel}>
-            <Modal
-              showModal={showInviteModel}
-              onClickAway={hideInviteMenu}
-            >
-              <div>
-                <div className={styles.ModelHeader}>Invite Member </div>
+      </div>
+      {openRoleUpdateAlert && (
+        <div className={styles.ProjectDeleteModel}>
+          <Modal
+            showModal={openRoleUpdateAlert}
+            onClickAway={hideRoleUpdateAlert}
+          >
+            <div>
+              <div className={styles.ModelHeader}>Change Member Role</div>
+              <div className={styles.UpdateForm}>
+                <div className={styles.UpdateInputSection}>
+                  <div className={styles.DeleteDescription}>
+                    Search member (by email)
+                  </div>
+                  <BlackInputText
+                    placeholder="Enter email here"
+                    name="email"
+                    value={email}
+                    // should not be editable
+                    // onChange={(e) => {
+                    //   this.handleChange(e);
+                    // }}
+                  />
+                </div>
+                <div className={styles.UpdateInputSection}>
+                  <div className={styles.DeleteDescription}>
+                    Member Role (in connection with user permission)
+                  </div>
+                  <Select
+                    required
+                    placeholder={role ? role : "Choose membership role"}
+                    options={roles}
+                    onChange={handleInvitationRole}
+                  />
+                </div>
+                {updateMemberError && (
+                  <Feedback message={updateMemberError} type="error" />
+                )}
+                <div className={styles.SendInvitationButton}>
+                  <PrimaryButton
+                    onClick={handleMemberRoleUpdate}
+                    color="primary"
+                  >
+                    {updatingMemberRole ? <Spinner /> : "Update Role"}
+                  </PrimaryButton>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      )}
+      {currentUserIsAdminOrMember === false ? (
+        <>
+          <div className="SectionTitle">Manage Project</div>
+          <div className="ProjectInstructions BigCard">
+            <div className="MemberBody">
+              <SettingsActionRow
+                title="Update Project"
+                content="Modify the project name and description"
+                buttonLabel="Update"
+                disabled={fetchingProjectMembers}
+                onButtonClick={showUpdateAlert}
+                buttonColor="primary"
+              />
+
+              <SettingsActionRow
+                title={`${
+                  state.projectDetails?.disabled ? "Enable" : "Disable"
+                } project
+                  `}
+                content={
+                  state.projectDetails?.disabled
+                    ? "Allow access to project resources and enable billing"
+                    : "Prevent project from being billed by blocking access to it's resources."
+                }
+                buttonLabel={
+                  state.projectDetails?.disabled ? "Enable" : "Disable"
+                }
+                buttonColor={state.projectDetails?.disabled ? "primary" : "red"}
+                onButtonClick={() => {
+                  disableProjectAlertFunc(true);
+                }}
+              />
+
+              <SettingsActionRow
+                title="Delete Project"
+                content="Take down your entire project, delete all apps under it."
+                buttonLabel="Delete"
+                buttonColor="red"
+                onButtonClick={showDeleteAlert}
+              />
+            </div>
+          </div>
+        </>
+      ) : null}
+
+      {openUpdateAlert && (
+        <div className={styles.ProjectDeleteModel}>
+          <Modal showModal={openUpdateAlert} onClickAway={hideUpdateAlert}>
+            <div>
+              <div
+                onSubmit={(e) => {
+                  handleSubmit();
+                  e.preventDefault();
+                }}
+              >
                 <div className={styles.UpdateForm}>
                   <div className={styles.UpdateInputSection}>
-                    <div className={styles.DeleteDescription}>
-                      Search member (by email)
-                    </div>
+                    <div className={styles.DeleteDescription}>Project name</div>
                     <BlackInputText
-                      placeholder="Enter email here"
-                      name="email"
-                      value={email}
+                      placeholder="Project Name"
+                      name="projectName"
+                      value={projectName}
                       onChange={(e) => {
                         handleChange(e);
                       }}
                     />
                   </div>
                   <div className={styles.UpdateInputSection}>
-                    <div className={styles.DeleteDescription}>
-                      Member Role (in connection with user permission)
-                    </div>
+                    <div className={styles.DeleteDescription}>Organisation</div>
                     <Select
                       required
-                      placeholder={role ? role : "Choose membership role"}
-                      options={roles}
-                      onChange={handleInvitationRole}
+                      placeholder={
+                        projectOrganisation
+                          ? projectOrganisation
+                          : "Update project Organization"
+                      }
+                      options={presetOrganisations}
+                      onChange={handleOrganisationSelectChange}
                     />
-                  </div>
-                  {invitingMembersError && (
-                    <Feedback type="error" message={invitingMembersError} />
-                  )}
-                  <div className={styles.SendInvitationButton}>
-                    <PrimaryButton
-                      color="primary"
-                      onClick={handleMemberInvitation}
-                    >
-                      {invitingMembers ? <Spinner /> : "Send Invitation"}
-                    </PrimaryButton>
-                  </div>
-                </div>
-              </div>
-            </Modal>
-          </div>
-        )}
-        {openDeleteAlert && (
-          <div className={styles.ProjectDeleteModel}>
-            <Modal
-              showModal={openDeleteAlert}
-              onClickAway={hideDeleteAlert}
-            >
-              <div className={styles.DeleteProjectModel}>
-                <div className={styles.DeleteProjectModalUpperSection}>
-                  <div className={styles.WarningContainer}>
-                    <div className={styles.DeleteDescription}>
-                      Are you sure you want to delete&nbsp;
-                      <span>{name}</span>
-                      &nbsp;?
-                    </div>
-                    <div className={styles.DeleteSubDescription}>
-                      This will permanently delete the project and all its
-                      resources.
-                      <br />
-                      <br />
-                      Please confirm by typing &nbsp;
-                      <b className={styles.DeleteWarning}>{name}</b> &nbsp;
-                      below.
-                    </div>
-                    <div className={styles.InnerModalDescription}>
+                    {othersBool && (
                       <BlackInputText
-                        required
-                        placeholder={name}
-                        name="Confirmprojectname"
-                        value={Confirmprojectname}
+                        placeholder="Organisation"
+                        name="projectOrganisation"
+                        value={projectOrganisation}
                         onChange={(e) => {
                           handleChange(e);
                         }}
                       />
-                      <DeleteWarning textAlignment="Left" />
+                    )}
+                  </div>
+                  <div className={styles.UpdateInputSection}>
+                    <div className={styles.DeleteDescription}>Project type</div>
+                    <Select
+                      required
+                      placeholder={
+                        projectType ? projectType : "Update project type"
+                      }
+                      options={types}
+                      onChange={handleTypeSelectChange}
+                    />
+                    {othersBool && (
+                      <BlackInputText
+                        required
+                        placeholder="Type of project"
+                        name="otherType"
+                        value={otherType}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    )}
+                  </div>
+                  <div className={styles.UpdateInputSection}>
+                    <div className={styles.DeleteDescription}>Project tags</div>
+                    <div className={styles.ProjectInputTag}>
+                      <TagInput
+                        userTags={
+                          state?.projectDetails?.tags
+                            ? state?.projectDetails?.tags?.map(
+                                (tag) => tag.name
+                              )
+                            : []
+                        }
+                        onTagsChange={onTagsChange}
+                      />
                     </div>
                   </div>
-                </div>
-                <div className={styles.DeleteProjectModalLowerSection}>
-                  <div className={styles.DeleteProjectModelButtons}>
+                  <div className={styles.UpdateInputSection}>
+                    <div className={styles.DeleteDescription}>
+                      Project description
+                    </div>
+                    <TextArea
+                      placeholder="Description"
+                      name="projectDescription"
+                      style={styles.TextArea}
+                      value={projectDescription}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
+                  </div>
+                  {error && (
+                    <Feedback
+                      type="error"
+                      message={"Failed to update Project"}
+                    />
+                  )}
+                  <div className={styles.UpdateProjectModelButtons}>
                     <PrimaryButton
                       className="CancelBtn"
-                      onClick={hideDeleteAlert}
+                      onClick={hideUpdateAlert}
                     >
                       Cancel
                     </PrimaryButton>
-                    <button
-                      className={
-                        disableDelete ? styles.InactiveDelete : styles.DeleteBtn
-                      }
-                      disabled={disableDelete}
-                      onClick={(e) =>
-                        handleDeleteProject(e, projectID)
-                      }
-                    >
-                      {deletingProject ? <Spinner /> : "Delete"}
-                    </button>
+                    <PrimaryButton onClick={handleSubmit} color="primary">
+                      {updatingProjectDetails ? <Spinner /> : "update project"}
+                    </PrimaryButton>
                   </div>
-
-                  {deleteProjectError && (
-                    <Feedback message={deleteProjectError} type="error" />
-                  )}
                 </div>
               </div>
-            </Modal>
-          </div>
-        )}
+            </div>
+          </Modal>
+        </div>
+      )}
+      {showInviteModel === true && (
+        <div className={styles.ProjectDeleteModel}>
+          <Modal showModal={showInviteModel} onClickAway={hideInviteMenu}>
+            <div>
+              <div className={styles.ModelHeader}>Invite Member </div>
+              <div className={styles.UpdateForm}>
+                <div className={styles.UpdateInputSection}>
+                  <div className={styles.DeleteDescription}>
+                    Search member (by email)
+                  </div>
+                  <BlackInputText
+                    placeholder="Enter email here"
+                    name="email"
+                    value={email}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                </div>
+                <div className={styles.UpdateInputSection}>
+                  <div className={styles.DeleteDescription}>
+                    Member Role (in connection with user permission)
+                  </div>
+                  <Select
+                    required
+                    placeholder={role ? role : "Choose membership role"}
+                    options={roles}
+                    onChange={handleInvitationRole}
+                  />
+                </div>
+                {invitingMembersError && (
+                  <Feedback type="error" message={invitingMembersError} />
+                )}
+                <div className={styles.SendInvitationButton}>
+                  <PrimaryButton
+                    color="primary"
+                    onClick={handleMemberInvitation}
+                  >
+                    {invitingMembers ? <Spinner /> : "Send Invitation"}
+                  </PrimaryButton>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      )}
+      {openDeleteAlert && (
+        <div className={styles.ProjectDeleteModel}>
+          <Modal showModal={openDeleteAlert} onClickAway={hideDeleteAlert}>
+            <div className={styles.DeleteProjectModel}>
+              <div className={styles.DeleteProjectModalUpperSection}>
+                <div className={styles.WarningContainer}>
+                  <div className={styles.DeleteDescription}>
+                    Are you sure you want to delete&nbsp;
+                    <span>{name}</span>
+                    &nbsp;?
+                  </div>
+                  <div className={styles.DeleteSubDescription}>
+                    This will permanently delete the project and all its
+                    resources.
+                    <br />
+                    <br />
+                    Please confirm by typing &nbsp;
+                    <b className={styles.DeleteWarning}>{name}</b> &nbsp; below.
+                  </div>
+                  <div className={styles.InnerModalDescription}>
+                    <BlackInputText
+                      required
+                      placeholder={name}
+                      name="Confirmprojectname"
+                      value={Confirmprojectname}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
+                    <DeleteWarning textAlignment="Left" />
+                  </div>
+                </div>
+              </div>
+              <div className={styles.DeleteProjectModalLowerSection}>
+                <div className={styles.DeleteProjectModelButtons}>
+                  <PrimaryButton
+                    className="CancelBtn"
+                    onClick={hideDeleteAlert}
+                  >
+                    Cancel
+                  </PrimaryButton>
+                  <button
+                    className={
+                      disableDelete ? styles.InactiveDelete : styles.DeleteBtn
+                    }
+                    disabled={disableDelete}
+                    onClick={(e) => handleDeleteProject(e, projectID)}
+                  >
+                    {deletingProject ? <Spinner /> : "Delete"}
+                  </button>
+                </div>
 
-        <Modal
-          showModal={removeMemberModal}
-          onClickAway={closeRemoveMemberModal}
+                {deleteProjectError && (
+                  <Feedback message={deleteProjectError} type="error" />
+                )}
+              </div>
+            </div>
+          </Modal>
+        </div>
+      )}
+
+      <Modal showModal={removeMemberModal} onClickAway={closeRemoveMemberModal}>
+        <div className={styles.DeleteProjectModel}>
+          <div className={styles.DeleteProjectModalUpperSection}>
+            <div className={styles.WarningContainer}>
+              <div className={styles.DeleteDescription}>
+                {currentUserEmail === email ? (
+                  <>Are you sure you want to remove yourself?</>
+                ) : (
+                  <>
+                    Are you sure you want to remove the member with
+                    <br /> email: {email}?
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className={styles.DeleteProjectModalLowerSection}>
+            <div className={styles.DeleteProjectModelButtons}>
+              <PrimaryButton
+                type="button"
+                className="CancelBtn"
+                onClick={closeRemoveMemberModal}
+              >
+                Cancel
+              </PrimaryButton>
+              <PrimaryButton
+                type="button"
+                color="red"
+                onClick={(e) => removeProjectMember(e)}
+              >
+                {removingMember ? <Spinner /> : "Confirm"}
+              </PrimaryButton>
+            </div>
+          </div>
+          {removeMemberError && (
+            <Feedback type="error" message={"Failed to remove member"} />
+          )}
+        </div>
+      </Modal>
+      {disableProjectAlert && (
+        <SettingsModal
+          showModal={disableProjectAlert}
+          onClickAway={() => {
+            disableProjectAlertFunc(false);
+          }}
         >
-          <div className={styles.DeleteProjectModel}>
-            <div className={styles.DeleteProjectModalUpperSection}>
-              <div className={styles.WarningContainer}>
-                <div className={styles.DeleteDescription}>
-                  {currentUserEmail === email ? (
-                    <>Are you sure you want to remove yourself?</>
-                  ) : (
-                    <>
-                      Are you sure you want to remove the member with
-                      <br /> email: {email}?
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className={styles.DeleteProjectModalLowerSection}>
-              <div className={styles.DeleteProjectModelButtons}>
-                <PrimaryButton
-                  type="button"
-                  className="CancelBtn"
-                  onClick={closeRemoveMemberModal}
-                >
-                  Cancel
-                </PrimaryButton>
-                <PrimaryButton
-                  type="button"
-                  color="red"
-                  onClick={(e) => removeProjectMember(e)}
-                >
-                  {removingMember ? <Spinner /> : "Confirm"}
-                </PrimaryButton>
-              </div>
-            </div>
-            {removeMemberError && (
-              <Feedback type="error" message={"Failed to remove member"} />
-            )}
-          </div>
-        </Modal>
-        {disableProjectAlert && (
-          <SettingsModal
-            showModal={disableProjectAlert}
-            onClickAway={() => {
+          <DisableModalContent
+            item={{
+              name: projectName,
+              type: "project",
+              disabled: state.projectDetails?.disabled,
+            }}
+            disableProgress={disableProjectProgress}
+            handleDisableButtonClick={() => {
+              handleEnableButtonClick();
+            }}
+            hideDisableAlert={() => {
               disableProjectAlertFunc(false);
             }}
-          >
-            <DisableModalContent
-              item={{
-                name: projectName,
-                type: "project",
-                disabled: state.projectDetails?.disabled,
-              }}
-              disableProgress={disableProjectProgress}
-              handleDisableButtonClick={() => {
-                handleEnableButtonClick();
-              }}
-              hideDisableAlert={() => {
-                disableProjectAlertFunc(false);
-              }}
-              message={disableProjectError}
-              isFailed={disableProjectError ? true : false}
-            />
-          </SettingsModal>
-        )}
-      </DashboardLayout>
-    );
-  
+            message={disableProjectError}
+            isFailed={disableProjectError ? true : false}
+          />
+        </SettingsModal>
+      )}
+    </DashboardLayout>
+  );
 };
-
-
 
 export default ProjectSettingsPage;

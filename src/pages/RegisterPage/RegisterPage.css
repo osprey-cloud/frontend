@@ -22,7 +22,7 @@
 }
 
 .RegisterSuccessContent {
-  min-height: 25rem;
+  max-width: 40rem;
   display: grid;
   grid-template-columns: 1fr;
   justify-content: center;

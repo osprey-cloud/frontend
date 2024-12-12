@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AppStatus from "../AppStatus";
 import PrimaryButton from "../PrimaryButton";
-import Select from "../Select";
 import { ReactComponent as SearchButton } from "../../assets/images/search.svg";
 import { ReactComponent as Coin } from "../../assets/images/coin.svg";
 import { ReactComponent as BackButton } from "../../assets/images/arrow-left.svg";
 import "./InformationBar.css";
-// import { ReactComponent as User } from "../../assets/images/user.svg";
-// import { ReactComponent as Users } from "../../assets/images/users.svg";
 import useMedia from "../../hooks/mediaquery";
 import { projectCategories } from "../../helpers/projectCategories";
 const InformationBar = ({
@@ -19,7 +16,7 @@ const InformationBar = ({
   btnAction,
   btntype = "new",
   viewAppLink,
-  viewAppLinkText="",
+  viewAppLinkText = "",
   credits,
   showSearchBar,
   placeholder,
@@ -88,7 +85,7 @@ const InformationBar = ({
           <div className="InformationBarWithButton">
             <div className="InfoHeader">
               {header}
-              {(viewFilter && isDesktop)  && (
+              {/* {(viewFilter && isDesktop)  && (
                 <div className="InfoProjectCategories">
                   <Select
                     className="InfoFilterOption"
@@ -100,22 +97,24 @@ const InformationBar = ({
                     }
                   />
                 </div>
-              )}
+              )} */}
             </div>
             <div className="InfoContent">
-              { isDesktop &&  <div className="SearchBar DesktopView">
-                <div className="SearchInput">
-                  <input
-                    type="text"
-                    className="searchTerm"
-                    name="Searchword"
-                    placeholder={placeholder}
-                    value={Searchword}
-                    onChange={callbackSearchWord}
-                  />
-                  <SearchButton className="SearchIcon" />
+              {isDesktop && (
+                <div className="SearchBar DesktopView">
+                  <div className="SearchInput">
+                    <input
+                      type="text"
+                      className="searchTerm"
+                      name="Searchword"
+                      placeholder={placeholder}
+                      value={Searchword}
+                      onChange={callbackSearchWord}
+                    />
+                    <SearchButton className="SearchIcon" />
+                  </div>
                 </div>
-              </div>}
+              )}
               <div className="ButtonWrap">
                 {adminRoute &&
                   (adminProjects ? (
@@ -137,9 +136,15 @@ const InformationBar = ({
                       <PrimaryButton color="primary">Dashboard</PrimaryButton>
                     </Link>
                   ))}
-                {showBtn && <PrimaryButton btntype={btntype} onClick={btnAction}>
-                  {buttontext}
-                </PrimaryButton>}
+                {showBtn && (
+                  <PrimaryButton
+                    btntype={btntype}
+                    color="primary"
+                    onClick={btnAction}
+                  >
+                    {buttontext}
+                  </PrimaryButton>
+                )}
               </div>
             </div>
           </div>
@@ -158,7 +163,7 @@ const InformationBar = ({
               </div>
             </div>
           </div>
-          
+          {/*           
             {(viewFilter && !isDesktop)  && (
                 <div className="InfoProjectCategories">
                   <Select
@@ -171,7 +176,7 @@ const InformationBar = ({
                     }
                   />
                 </div>
-              )}
+              )} */}
         </div>
       ) : showBtn ? (
         <div className="InformationBarWithButton">
@@ -204,7 +209,9 @@ const InformationBar = ({
         <div className="InformationBarWithButton">
           <div className="InfoHeader">{header}</div>
           <a href={viewAppLink} rel="noopener noreferrer" target="_blank">
-            <PrimaryButton color="primary-outline">{viewAppLinkText ? viewAppLinkText  :"Open App"}</PrimaryButton>
+            <PrimaryButton color="primary-outline">
+              {viewAppLinkText ? viewAppLinkText : "Open App"}
+            </PrimaryButton>
           </a>
         </div>
       ) : credits ? (

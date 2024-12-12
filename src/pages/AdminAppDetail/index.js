@@ -12,15 +12,19 @@ import getAppRevisions, {
   clearFetchAppRevisionsState,
 } from "../../redux/actions/getRevisions.js";
 import Spinner from "../../components/Spinner/index.js";
+import { useProject } from "../../hooks/useProject.js";
 
 const AdminAppDetail = () => {
   const dispatch = useDispatch();
   const { appID } = useParams();
+  const [projectID, setProjectID] = useState("");
   const [appDetail, setAppDetail] = useState({});
 
   const { revisions, isFetching } = useSelector(
     (state) => state.appRevisionsReducer
   );
+
+  const { data: projectDetails, isLoading } = useProject(projectID);
 
   useEffect(() => {
     getAppDetails(appID);
@@ -50,6 +54,7 @@ const AdminAppDetail = () => {
       const response = await handleGetRequest(`/apps/${appID}`);
       if (response.data.status === "success") {
         setAppDetail(response.data.data);
+        setProjectID(response.data.data?.apps?.project_id);
       } else {
         throw new Error("No App detail found");
       }
@@ -180,10 +185,95 @@ const AdminAppDetail = () => {
             )}
           </div>
         </div>
-        <div className={styles.DetailSecond}>
-          <div className={styles.DetailFirstTitle}>Revision History</div>
-          <div className={styles.DetailSecondColumn}>
-            <div className={styles.Revision}>Current Revision</div>
+
+        <div className={styles.DetailSecondColumn}>
+          <div>
+            <div className={styles.DetailFirstTitle}>Cluster Information</div>
+            {isLoading ? (
+              <div className={styles.SpinnerArea}>
+                <Spinner size={"small"} />
+              </div>
+            ) : (
+              <>
+                <div class="list-group">
+                  <div className={styles.listItem}>
+                    <strong>Name:</strong>{" "}
+                    {projectDetails
+                      ? projectDetails?.data?.data?.project?.cluster?.name
+                      : "N/A"}
+                  </div>
+                  <div className={styles.listItem}>
+                    <strong>ID:</strong>{" "}
+                    {projectDetails
+                      ? projectDetails?.data?.data?.project?.cluster?.id
+                      : "N/A"}
+                  </div>
+                  <div className={styles.listItem}>
+                    <strong>Description:</strong>{" "}
+                    {projectDetails
+                      ? projectDetails?.data?.data?.project?.cluster
+                          ?.description
+                      : "N/A"}
+                  </div>
+                  <div className={styles.listItem}>
+                    <strong>Created:</strong>{" "}
+                    {projectDetails
+                      ? DisplayDateTime(
+                          new Date(
+                            projectDetails?.data?.data?.project?.cluster?.date_created
+                          )
+                        )
+                      : "N/A"}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div>
+            <div className={styles.DetailFirstTitle}>Project Information</div>
+            {isLoading ? (
+              <div className={styles.SpinnerArea}>
+                <Spinner size={"small"} />
+              </div>
+            ) : (
+              <>
+                <div class="list-group">
+                  <div className={styles.listItem}>
+                    <strong>Name:</strong>{" "}
+                    {projectDetails
+                      ? projectDetails?.data?.data?.project?.name
+                      : "N/A"}
+                  </div>
+                  <div className={styles.listItem}>
+                    <strong>Description:</strong>{" "}
+                    {projectDetails
+                      ? projectDetails?.data?.data?.project?.description
+                      : "N/A"}
+                  </div>
+                  <div className={styles.listItem}>
+                    <strong>Owner ID:</strong>{" "}
+                    {projectDetails
+                      ? projectDetails?.data?.data?.project?.owner_id
+                      : "N/A"}
+                  </div>
+                  <div className={styles.listItem}>
+                    <strong>Created:</strong>{" "}
+                    {projectDetails
+                      ? DisplayDateTime(
+                          new Date(
+                            projectDetails?.data?.data?.project?.date_created
+                          )
+                        )
+                      : "N/A"}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div>
+            <div className={styles.DetailFirstTitle}>Current Revision</div>
             {isFetching ? (
               <div className={styles.SpinnerArea}>
                 <Spinner size={"small"} />

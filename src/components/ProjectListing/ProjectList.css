@@ -32,10 +32,7 @@
     /* padding-left: 3rem; */
 }
 
-.SectionTitle .SelectElementValue .DropDownLink {
-    text-align: center;
-    justify-content: center;
-}
+
 
 /* .ClusterContainer {
     place-items: center;
@@ -49,14 +46,6 @@
     align-items: center;
 }
 
-.ChartContainer .VisualAreaHeader .SelectElementValue {
-    padding: 0.6rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
 
 .VisualAreaHeader .SectionTitle .SelectOptionsWrapper .SelectOption {
     padding: 0 1rem;
@@ -77,12 +66,6 @@
     cursor: pointer;
 }
 
-.TitleArea .SectionTitle .SelectElementValue {
-    gap: 0.5rem;
-    padding: 0.7rem;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
 
 @media (min-width : 768px),
 (max-width: 1280px) {
@@ -119,7 +102,7 @@
     }
 
     .uppercase {
-        font-size: 20px;
+        font-size: 1.1rem;
         text-transform: capitalize;
         text-align: left;
         font-weight: bolder;
@@ -135,12 +118,12 @@
         height: 100%;
     }
 
-    .ResourcesTable table td {
+    /* .ResourcesTable table td {
         padding: 0.8rem 1rem;
         text-align: left;
         font-weight: normal;
         font-size: 18px;
-    }
+    } */
 }
 
 @media (max-width : 1024px) {
@@ -161,7 +144,7 @@
 
 
     .NewResourceCardHeader {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .NewResourceCardCount {
@@ -183,7 +166,7 @@
         /* display: grid; */
         align-items: center;
         padding-top: 1rem;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .UserSection .piechart {
@@ -204,15 +187,6 @@
         flex-wrap: nowrap;
     }
 
-    .SelectElementValue {
-        padding: 0.2rem;
-        display: flex;
-        justify-content: space-between;
-        gap: 0.2rem;
-        align-items: center;
-        padding: 0.2rem;
-        font-size: 0.9rem;
-    }
 
     /* .SelectElementMain {
         border: 1px solid #000000;
@@ -226,7 +200,7 @@
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #cccccc;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .AdminSearchInput input {
@@ -235,7 +209,7 @@
         border-top-left-radius: 4px 2px;
         border-bottom-left-radius: 3px 4px;
         color: #000;
-        font-size: 1rem;
+        font-size: 0.9rem;
         height: 40px;
         max-width: 10rem;
         padding: 1rem;
@@ -245,9 +219,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1.5rem 0 1rem;
-        max-width: 90%;
-        border-bottom: 1px solid #ccc;
     }
 }
 
@@ -297,12 +268,12 @@
         height: calc(100vh - 4rem);
     }
 
-    .ResourcesTable table td {
+    /* .ResourcesTable table td {
         padding: 0.5rem 0.8rem;
         text-align: left;
         font-weight: normal;
         font-size: 12px;
-    }
+    } */
 
     .AdminSearchInput {
         display: flex;

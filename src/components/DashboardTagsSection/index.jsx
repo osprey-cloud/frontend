@@ -10,7 +10,9 @@ const TagsList = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const { data: tags, isLoading: isLoadingTags } = useTags();
+
   const {title}=props;
+
   const handleViewMore = () => {
     setShowModal(true);
   };

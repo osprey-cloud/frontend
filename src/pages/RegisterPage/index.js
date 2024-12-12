@@ -98,15 +98,15 @@ export default class RegisterPage extends Component {
   handleOnChange(e) {
     const { error } = this.state;
     const { name, value } = e.target;
-    
-    if (name === 'password') {
+
+    if (name === "password") {
       this.validatePassword(value);
     }
-  
+
     this.setState({
       [name]: value,
     });
-  
+
     if (error) {
       this.setState({
         error: "",
@@ -137,7 +137,7 @@ export default class RegisterPage extends Component {
       password,
       passwordConfirm,
       hasAgreed,
-      passwordValidations
+      passwordValidations,
     } = this.state;
 
     const userData = {
@@ -178,10 +178,16 @@ export default class RegisterPage extends Component {
         loading: false,
         error: "Please agree to our Terms of Service",
       });
-    } else if (!passwordValidations.hasUppercase || !passwordValidations.hasLowercase || !passwordValidations.hasNumber || !passwordValidations.isMinLength) {
+    } else if (
+      !passwordValidations.hasUppercase ||
+      !passwordValidations.hasLowercase ||
+      !passwordValidations.hasNumber ||
+      !passwordValidations.isMinLength
+    ) {
       this.setState({
         loading: false,
-        error: "Password must contain at least one uppercase letter, one lowercase letter, a number and 8 characters long",
+        error:
+          "Password must contain at least one uppercase letter, one lowercase letter, a number and 8 characters long",
       });
     } else {
       this.setState({
@@ -222,137 +228,14 @@ export default class RegisterPage extends Component {
       hasAgreed,
       gitLoading,
     } = this.state;
-    return (
-      <div className="SectionsContainer">
-        <div className="LeftSectionContent">
-          <Logo className="Brand" />
-          <h1 className="BrandText">Crane Cloud</h1>
-          <h2 className="BrandSubText">
-            Crane Cloud is an open-source multi-cloud software platform which
-            provides a comprehensive suite of cloud services tailored to meet
-            various needs, including deploying applications, storing data, and
-            managing computing resources for cloud-native application deployment
-            and management.
-          </h2>
-        </div>
-        <div className="RightSectionContent">
-          {!registered ? (
-            <div>
-              <div className="RegisterContentHeading">
-                <h1>Create an account</h1>
-              </div>
-              <form onSubmit={this.handleSubmit} className="LoginContentInputs">
-                <InputText
-                  required
-                  placeholder="Name"
-                  name="name"
-                  value={name}
-                  onChange={this.handleOnChange}
-                />
-                <InputText
-                  required
-                  placeholder="Username"
-                  name="username"
-                  value={username}
-                  onChange={this.handleOnChange}
-                />
-                <InputText
-                  required
-                  placeholder="Organisation"
-                  name="organisation"
-                  value={organisation}
-                  onChange={this.handleOnChange}
-                />
-                <InputText
-                  required
-                  placeholder="Email Address"
-                  name="email"
-                  type="email"
-                  value={email}
-                  onChange={this.handleOnChange}
-                />
-                <div className="password-wrapper">
-                  <InputText
-                    required
-                    placeholder="Password"
-                    name="password"
-                    type={passwordShown ? "text" : "password"}
-                    value={password}
-                    onChange={this.handleOnChange}
-                  />
-                  <div className="password" onClick={this.togglePassword}>
-                    {passwordShown ? <Open /> : <Closed />}
-                  </div>
-                </div>
-                <div className="password-repeat">
-                  <InputText
-                    required
-                    placeholder="Repeat Password"
-                    name="passwordConfirm"
-                    type={displayPassword ? "text" : "password"}
-                    value={passwordConfirm}
-                    onChange={this.handleOnChange}
-                  />
-                  <div
-                    className="password"
-                    onClick={this.togglePasswordConfirm}
-                  >
-                    {displayPassword ? <Open /> : <Closed />}
-                  </div>
-                </div>
-
-                {error && <div className="RegisterErrorDiv">{error}</div>}
-                <div className=" RegisterTerms">
-                  <Checkbox onClick={this.toggleAgreed} isChecked={hasAgreed} />
-                  <div>
-                    I agree to Crane Cloud{" "}
-                    <Link
-                      to="/terms-of-service"
-                      target="_blank"
-                      className="LoginContentLink"
-                    >
-                      Terms of service.
-                    </Link>
-                  </div>
-                </div>
-
-                <PrimaryButton
-                  className="LoginButton AuthBtn"
-                  type="submit"
-                  onClick={this.handleSubmit}
-                >
-                  {loading ? <Spinner /> : "Register"}
-                </PrimaryButton>
-              </form>
-              <div className="LowerLoginSection">
-                <div>
-                  <p className="LoginWith">
-                    <span>Or join with</span>
-                  </p>
-                </div>
-                <PrimaryButton
-                  className="GithubLoginBtn AuthBtn"
-                  disabled={gitLoading}
-                  onClick={this.toGithubauth}
-                >
-                  {gitLoading ? (
-                    <Spinner />
-                  ) : (
-                    <div className="GitLoginBtn">
-                      <LogoIcon className="LogoIcon" />
-                      <div className="GitText">Github</div>
-                    </div>
-                  )}
-                </PrimaryButton>
-              </div>
-              <div className="LoginContentBottomLink LoginLinkContainer">
-                Already have an account? &nbsp;
-                <Link to="/login" className="LoginContentLink">
-                  Go to Login
-                </Link>
-              </div>
+    if (registered)
+      return (
+        <div className="SectionsContainer">
+          <div className="RightSectionContent">
+            <div className="LoginContentHeader">
+              <Logo className="Brand" />
+              <h1 className="LoginContentTitle">Create an account</h1>
             </div>
-          ) : (
             <div className="RegisterSuccessContent">
               <div className="RegisteredMessage">
                 <h2>Thank you for registering with us!</h2>
@@ -367,8 +250,128 @@ export default class RegisterPage extends Component {
                 </p>
               </div>
             </div>
-          )}
+            <Link to="/login" className="LoginContentLink">
+              Go to Login
+            </Link>
+          </div>
         </div>
+      );
+    return (
+      <div className="SectionsContainer">
+        <div className="RightSectionContent" style={{ width: "70%" }}>
+          <div className="LoginContentHeader">
+            <Logo className="Brand" />
+            <h1 className="LoginContentTitle">Create an account</h1>
+          </div>
+          <form onSubmit={this.handleSubmit} className="LoginContentInputs">
+            <InputText
+              required
+              placeholder="Name"
+              name="name"
+              value={name}
+              onChange={this.handleOnChange}
+            />
+            <InputText
+              required
+              placeholder="Username"
+              name="username"
+              value={username}
+              onChange={this.handleOnChange}
+            />
+            <InputText
+              required
+              placeholder="Organisation"
+              name="organisation"
+              value={organisation}
+              onChange={this.handleOnChange}
+            />
+            <InputText
+              required
+              placeholder="Email Address"
+              name="email"
+              type="email"
+              value={email}
+              onChange={this.handleOnChange}
+            />
+            <div className="password-wrapper">
+              <InputText
+                required
+                placeholder="Password"
+                name="password"
+                type={passwordShown ? "text" : "password"}
+                value={password}
+                onChange={this.handleOnChange}
+              />
+              <div className="password" onClick={this.togglePassword}>
+                {passwordShown ? <Open /> : <Closed />}
+              </div>
+            </div>
+            <div className="password-repeat">
+              <InputText
+                required
+                placeholder="Repeat Password"
+                name="passwordConfirm"
+                type={displayPassword ? "text" : "password"}
+                value={passwordConfirm}
+                onChange={this.handleOnChange}
+              />
+              <div className="password" onClick={this.togglePasswordConfirm}>
+                {displayPassword ? <Open /> : <Closed />}
+              </div>
+            </div>
+
+            {error && <div className="RegisterErrorDiv">{error}</div>}
+            <div className=" RegisterTerms">
+              <Checkbox onClick={this.toggleAgreed} isChecked={hasAgreed} />
+              <div>
+                I agree to Crane Cloud{" "}
+                <Link
+                  to="/terms-of-service"
+                  target="_blank"
+                  className="LoginContentLink"
+                >
+                  Terms of service.
+                </Link>
+              </div>
+            </div>
+
+            <PrimaryButton
+              className="LoginButton AuthBtn"
+              type="submit"
+              onClick={this.handleSubmit}
+            >
+              {loading ? <Spinner /> : "Register"}
+            </PrimaryButton>
+          </form>
+          <div className="LowerLoginSection">
+            <div>
+              <p className="LoginWith">
+                <span>Or join with</span>
+              </p>
+            </div>
+            <PrimaryButton
+              className="GithubLoginBtn AuthBtn"
+              disabled={gitLoading}
+              onClick={this.toGithubauth}
+            >
+              {gitLoading ? (
+                <Spinner />
+              ) : (
+                <div className="GitLoginBtn">
+                  <LogoIcon className="LogoIcon" />
+                  <div className="GitText">Github</div>
+                </div>
+              )}
+            </PrimaryButton>
+          </div>
+          <div className="LoginContentBottomLink LoginLinkContainer">
+            Already have an account? &nbsp;
+            <Link to="/login" className="LoginContentLink">
+              Go to Login
+            </Link>
+          </div>
+        </div>
+        <div className="LeftSectionContent"></div>
       </div>
     );
   }

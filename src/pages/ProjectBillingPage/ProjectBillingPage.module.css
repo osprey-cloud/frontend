@@ -10,7 +10,7 @@
 .NoResourcesMesssage {
   flex-grow: 1;
   display: flex;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 4rem;
   text-align: center;
   justify-content: center;
@@ -362,14 +362,14 @@
 }
 .SubModalTitle {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
   padding-bottom: 0.5rem;
 }
 .Iconsection {
   display: flex;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
   flex-direction: column;
   padding-top: 0.5rem;

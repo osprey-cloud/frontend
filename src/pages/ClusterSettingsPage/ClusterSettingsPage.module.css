@@ -177,13 +177,6 @@
   font-weight: 500;
 }
 
-.ProjectInstructions {
-  padding: 1rem 1rem;
-  background: #ffffff;
-  border: 1px solid var(--gray-light-color);
-  display: grid;
-  gap: 2rem;
-}
 
 .ProjectButtonRow {
   display: grid;

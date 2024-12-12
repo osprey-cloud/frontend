@@ -20,16 +20,6 @@
   width: 100%;
 }
 
-.TitleArea .SelectElementValue {
-  gap: 1.5rem;
-  padding: 0.6rem;
-  font-weight: bold;
-}
-
-.TitleArea .SelectElementValue:hover {
-  cursor: pointer;
-}
-
 .TitleArea .XSearchBar {
   padding-bottom: 0.5rem;
 }

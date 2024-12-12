@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import {  useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PrimaryButton from "../PrimaryButton";
 import Select from "../Select";
 import Header from "../Header";
@@ -14,10 +14,23 @@ import { retrieveProjectTypes } from "../../helpers/projecttypes";
 import { namedOrganisations } from "../../helpers/projectOrganisations";
 import handleProjectValidation from "../../helpers/validation";
 import TagInput from "../ProjectTagInput";
+import getClustersList from "../../redux/actions/clusters.js";
 
 const CreateProject = ({ closeComponent }) => {
-  // const dispatch = useDispatch();
-  const clusters = useSelector((state) => state.clustersReducer.clusters.clusters);
+  const dispatch = useDispatch();
+
+  const getClusters = useCallback(
+    () => dispatch(getClustersList()),
+    [dispatch]
+  );
+  useEffect(() => {
+    getClusters();
+  }, [getClusters]);
+
+  const clusters = useSelector(
+    (state) => state.clustersReducer.clusters.clusters
+  );
+
   const data = useSelector((state) => state.user.data);
 
   const [projectName, setProjectName] = useState("");
@@ -74,6 +87,7 @@ const CreateProject = ({ closeComponent }) => {
     setClusterChoices(!clusterChoices);
   };
 
+  // eslint-disable-next-line
   const togglemultiCluster = () => {
     setMultiCluster(!multiCluster);
   };
@@ -103,10 +117,9 @@ const CreateProject = ({ closeComponent }) => {
         owner_id: data.id,
         organisation: projectOrganisation,
         project_type: approvedType,
-        
       };
-      if(tags.length > 0) {
-        newProject.tags_add = tags
+      if (tags.length > 0) {
+        newProject.tags_add = tags;
       }
       addNewProject(newProject);
     }
@@ -130,7 +143,7 @@ const CreateProject = ({ closeComponent }) => {
   const types = retrieveProjectTypes();
   const presetOrganisations = namedOrganisations();
   const onTagsChange = (tags) => {
-     setTags(tags);
+    setTags(tags);
   };
 
   return (
@@ -164,9 +177,11 @@ const CreateProject = ({ closeComponent }) => {
                   {multiCluster && (
                     <div>
                       <div className={styles.ClusterToggleSection}>
-                        <ToggleOnOffButton onClick={changeMultiSelectioOption} />
-                        &nbsp; Cranecloud automatically selects the rest of
-                        the clusters for this project.
+                        <ToggleOnOffButton
+                          onClick={changeMultiSelectioOption}
+                        />
+                        &nbsp; Cranecloud automatically selects the rest of the
+                        clusters for this project.
                       </div>
                       {clusterChoices && (
                         <div>
@@ -255,7 +270,7 @@ const CreateProject = ({ closeComponent }) => {
                 <div className={styles.Element}>
                   <div className={styles.ElementTitle}>Project tags</div>
                   {/* <div className={`${styles.inputTagSection}`}> */}
-                    <TagInput onTagsChange={onTagsChange} />
+                  <TagInput onTagsChange={onTagsChange} />
                   {/* </div> */}
                 </div>
                 {error && (
@@ -280,23 +295,21 @@ const CreateProject = ({ closeComponent }) => {
                   </div>
                 )}
                 <div className={styles.InnerContent}>
-                    <PrimaryButton
-                      className="AuthBtn"
-                      onClick={handleSubmit}
-                      color="primary"
-                    >
-                      {addingProject ? <Spinner /> : "Create Project"}
-                    </PrimaryButton>
-                  </div>
+                  <PrimaryButton
+                    className="AuthBtn"
+                    onClick={handleSubmit}
+                    color="primary"
+                  >
+                    {addingProject ? <Spinner /> : "Create Project"}
+                  </PrimaryButton>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-
-
+    </div>
+  );
+};
 
 export default CreateProject;

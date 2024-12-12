@@ -115,7 +115,7 @@ describe("<RegisterPage/> Component", () => {
       registered: false,
     });
 
-    expect(RegisterPageComponent.find(".RegisterContentHeading").exists()).toBe(
+    expect(RegisterPageComponent.find(".LoginContentHeader").exists()).toBe(
       true
     );
     expect(RegisterPageComponent.find("form.LoginContentInputs").exists()).toBe(

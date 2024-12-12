@@ -9,7 +9,7 @@ const Select = ({
   options,
   onChange,
   isSmall = false,
-  className = ""
+  className = "",
 }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [selected, setValue] = useState(
@@ -49,7 +49,7 @@ const Select = ({
   return (
     <div ref={openSelectRef} className="SelectWrapper fix-width">
       <div
-        className={`SelectElementMain ${className}` }
+        className={`SelectElementMain ${className}`}
         onClick={toggleOptions}
         role="presentation"
       >
@@ -77,7 +77,7 @@ const Select = ({
       </div>
       {showOptions && (
         <div className="SelectOptionsWrapper">
-          {options.map((option) => (
+          {options?.map((option) => (
             <div
               key={option.id}
               className="SelectOption"

@@ -8,7 +8,6 @@ export const useRecentActivity = (page, userID) => {
   } else {
     link = `/activity_feed`;
   }
-  console.log("link", link);
 
   return useQuery({
     queryFn: ()=> api.get(link),
