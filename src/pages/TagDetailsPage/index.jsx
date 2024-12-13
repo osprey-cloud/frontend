@@ -263,4 +263,5 @@ const TagDetailsPage = () => {
      )}
     </>
 )}
+
 export default TagDetailsPage;

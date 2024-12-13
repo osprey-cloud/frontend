@@ -10,6 +10,8 @@ import { useHistory } from "react-router-dom";
 
 const TagCard = ({ id, isModalTag, onClose }) => {
   const [isFollowing, setFollowing] = useState(false);
+  
+  const history = useHistory();
 
   const handleClick =()=>{
     history.push(`/tags/${tag?.data?.data?.id}/details`)
@@ -22,7 +24,6 @@ const TagCard = ({ id, isModalTag, onClose }) => {
  
   const { data: tag, isLoading } = useTag(id);
   if (isLoading) <p>loading...</p>;
-
 
   const followTagMutation = useMutation({
     mutationFn: () => axios.post(`tags/${id}/following`, {}),
@@ -63,7 +64,7 @@ const TagCard = ({ id, isModalTag, onClose }) => {
       followTagMutation.mutate();
     }
   }
-  const history = useHistory();
+
   return (
     <div className={styles.card}>
       <div className={styles.cardContent}>
