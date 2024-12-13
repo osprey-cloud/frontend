@@ -6,9 +6,19 @@ import axios from "../../axios";
 import { handleDeleteRequest } from "../../apis/apis";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTag } from "../../hooks/useTag";
+import { useHistory } from "react-router-dom";
 
-const TagCard = ({ id, isModalTag }) => {
+const TagCard = ({ id, isModalTag, onClose }) => {
   const [isFollowing, setFollowing] = useState(false);
+  
+  const history = useHistory();
+
+  const handleClick =()=>{
+    history.push(`/tags/${tag?.data?.data?.id}/details`)
+    if(onClose){ 
+      onClose()
+    }
+  }
 
   const queryClient = useQueryClient();
 
@@ -53,12 +63,17 @@ const TagCard = ({ id, isModalTag }) => {
       setFollowing(false);
       followTagMutation.mutate();
     }
-  };
+
+  }
 
   return (
     <div className={styles.card}>
       <div className={styles.cardContent}>
-        <div className={styles.tagName}>{tag?.data?.data?.name}</div>
+        <div className={styles.tagName}
+          onClick={handleClick}
+        >
+            {tag?.data?.data?.name}
+        </div>
         {isModalTag && (
           <div className={styles.modalFollowButton}>
             <button

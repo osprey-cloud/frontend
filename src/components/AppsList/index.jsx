@@ -229,4 +229,4 @@ const mapDispatchToProps = {
   getAppsList,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppsList);
+ export default connect(mapStateToProps, mapDispatchToProps)(AppsList);

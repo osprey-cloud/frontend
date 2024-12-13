@@ -22,5 +22,7 @@ export const MIRA_DOCS_URL =
 
 // microservices
 export const DATABASE_API_URL = process.env.REACT_APP_DATABASE_API_URL;
-export const ACTIVITY_LOGS_API_URL = process.env.REACT_APP_ACTIVITY_LOGS_API_URL;
+export const ACTIVITY_LOGS_API_URL =
+  process.env.REACT_APP_ACTIVITY_LOGS_API_URL;
 export const MONITORING_API_URL = process.env.REACT_APP_MONITORING_API_URL;
+export const MLOPS_API_URL = process.env.REACT_APP_MLOPS_API_URL;

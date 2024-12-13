@@ -66,15 +66,6 @@ const ProjectListSection = () => {
                 />
               ))
           )}
-
-          {/* {!noProjectsFound && (
-            <PrimaryButton
-              className={styles.viewMoreButton}
-              onClick={handleViewMoreClick}
-            >
-              View All
-            </PrimaryButton>
-          )} */}
         </>
       )}
     </div>

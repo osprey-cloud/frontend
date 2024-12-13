@@ -16,6 +16,8 @@ import { ReactComponent as Network } from "../../assets/images/wifi.svg";
 import { ReactComponent as Disk } from "../../assets/images/server.svg";
 import { ReactComponent as Memory } from "../../assets/images/hard-drive.svg";
 import { ReactComponent as Database } from "../../assets/images/database.svg";
+import { ReactComponent as Experiment } from "../../assets/images/flask-experiment.svg";
+import { ReactComponent as AppDeployment } from "../../assets/images/deploymentCopy.svg";
 // import { ReactComponent as Activity } from "../../assets/images/activity.svg";
 import { ReactComponent as Apps } from "../../assets/images/grid.svg";
 import useMedia from "../../hooks/mediaquery";
@@ -23,7 +25,7 @@ import Menu from "../../assets/images/menu.svg";
 import CloseIcon from "../../assets/images/cancel-icon.svg";
 
 const SideBar = (props) => {
-  const { name } = props;
+  const { name, appCategory } = props;
   const params = useParams();
   const { projectID, appID } = params;
   const location = useLocation();
@@ -182,16 +184,18 @@ const SideBar = (props) => {
                 {(isAppMetricsPage || isAppPage) && (
                   <>
                     <>
-                      <div>
-                        <NavLink
-                          to={`/projects/${projectID}/apps/${appID}/logs`}
-                          className={styles.SubBarListItem}
-                        >
-                          {" "}
-                          <Clip />
-                          Logs
-                        </NavLink>
-                      </div>
+                      {appCategory !== "notebook" && (
+                        <div>
+                          <NavLink
+                            to={`/projects/${projectID}/apps/${appID}/logs`}
+                            className={styles.SubBarListItem}
+                          >
+                            {" "}
+                            <Clip />
+                            Logs
+                          </NavLink>
+                        </div>
+                      )}
                       <Link
                         to="#"
                         className={`${styles.ListItem} ${styles.DisabledLink}`}
@@ -199,6 +203,30 @@ const SideBar = (props) => {
                         OTHER
                       </Link>
                     </>
+
+                    {appCategory === "notebook" && (
+                      <>
+                        <div>
+                          <NavLink
+                            to={`/projects/${projectID}/apps/${appID}/experiments`}
+                            className={styles.SubBarListItem}
+                          >
+                            <Experiment style={{ paddingBottom: "0.2rem" }} />
+                            Experiments
+                          </NavLink>
+                        </div>
+                        <div>
+                          <NavLink
+                            to={`/projects/${projectID}/apps/${appID}/deployments`}
+                            className={styles.SubBarListItem}
+                          >
+                            <AppDeployment />
+                            Deployments
+                          </NavLink>
+                        </div>
+                      </>
+                    )}
+
                     <div>
                       <NavLink
                         to={{
@@ -283,14 +311,16 @@ const SideBar = (props) => {
           <img src={Menu} alt="menu" />
         </div>
       )}
-       {!isDesktop && OpenForsmallScreen &&<div
+      {!isDesktop && OpenForsmallScreen && (
+        <div
           className="CloseMenuIcon"
           onClick={() => {
-            setopenForsmallScreen(false)
+            setopenForsmallScreen(false);
           }}
         >
-        <img src={CloseIcon} alt="menu" />  
-        </div>}
+          <img src={CloseIcon} alt="menu" />
+        </div>
+      )}
     </>
   );
 };
