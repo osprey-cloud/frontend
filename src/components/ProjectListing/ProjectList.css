@@ -102,7 +102,7 @@
     }
 
     .uppercase {
-        font-size: 20px;
+        font-size: 1.1rem;
         text-transform: capitalize;
         text-align: left;
         font-weight: bolder;
@@ -118,12 +118,12 @@
         height: 100%;
     }
 
-    .ResourcesTable table td {
+    /* .ResourcesTable table td {
         padding: 0.8rem 1rem;
         text-align: left;
         font-weight: normal;
         font-size: 18px;
-    }
+    } */
 }
 
 @media (max-width : 1024px) {
@@ -268,12 +268,12 @@
         height: calc(100vh - 4rem);
     }
 
-    .ResourcesTable table td {
+    /* .ResourcesTable table td {
         padding: 0.5rem 0.8rem;
         text-align: left;
         font-weight: normal;
         font-size: 12px;
-    }
+    } */
 
     .AdminSearchInput {
         display: flex;
