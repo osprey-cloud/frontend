@@ -21,7 +21,7 @@ const TagCard = ({ id, isModalTag, onClose }) => {
   }
 
   const queryClient = useQueryClient();
- 
+
   const { data: tag, isLoading } = useTag(id);
   if (isLoading) <p>loading...</p>;
 
@@ -63,6 +63,7 @@ const TagCard = ({ id, isModalTag, onClose }) => {
       setFollowing(false);
       followTagMutation.mutate();
     }
+
   }
 
   return (

@@ -25,7 +25,6 @@ import NewResourceCard from "../../components/NewResourceCard";
 import { getUserCategories } from "../../helpers/userCategories";
 import "./AdminUserOverviewPage.css";
 import { createUsersPieChartData } from "../../helpers/usersPieChartData";
-import { createUserGraphData } from "../../helpers/usersGraphData";
 import { ReactComponent as SearchButton } from "../../assets/images/search.svg";
 import { ReactComponent as BackButton } from "../../assets/images/arrow-left.svg";
 import UserListing from "../../components/UserListing";
@@ -41,11 +40,10 @@ const AdminUserOverviewPage = () => {
   const [word, setWord] = useState("");
   const [currentPage, handleChangePage] = usePaginator();
   const [dateRange, setDateRange] = useState("7");
+  const [graphDataArray, setGraphDataArray] = useState([]);
   const dispatch = useDispatch();
 
   const COLORS = ["#0088FE", "#0DBC00", "#F9991A"];
-
-  let graphDataArray = [];
   let filteredGraphData = [];
 
   const gettingUsers = useCallback(
@@ -62,26 +60,14 @@ const AdminUserOverviewPage = () => {
     setLoading(true);
 
     try {
-      const response = await handleGetRequest("/users");
-      if (response.data.data.users.length > 0) {
-        const totalNumberOfUsers = response.data.data.pagination.total;
-        handleGetRequest(`/users?per_page=${totalNumberOfUsers}`)
-          .then((response) => {
-            if (response.data.data.users.length > 0) {
-              setUsersSummary(response.data.data.users);
-              setLoading(false);
-            } else {
-              throw new Error("No users found");
-            }
-          })
-          .catch(() => {
-            setFeedback("Failed to fetch all users, please try again");
-          });
-      } else {
-        setFeedback("No users found");
-      }
+      const response = await handleGetRequest("/users?series=true");
+      setGraphDataArray(response.data.data.graph_data)
+      setUsersSummary(response.data.data.meta_data)
     } catch (error) {
       setFeedback("Failed to fetch users, please try again");
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -94,22 +80,16 @@ const AdminUserOverviewPage = () => {
   }, [sectionValue, currentPage, dateRange, dispatch]);
 
   const userCounts = {
-    total: usersSummary.length,
-    verified: usersSummary.filter((user) => user.verified === true).length,
-    unverified: usersSummary.filter((user) => user.verified === false).length,
-    beta: usersSummary.filter((user) => user.is_beta_user === true).length,
-    disabled: 0,
+    total: usersSummary.total_users,
+    verified:usersSummary.total_users-usersSummary.none_verified,
+    unverified: usersSummary.none_verified,
+    beta: usersSummary.beta_users,
+    disabled: usersSummary.disabled,
   };
 
   const handleChange = ({ target }) => {
     setPeriod(target.getAttribute("value"));
   };
-
-  // Filter out verified users
-  const verifiedUsers = usersSummary.filter((user) => user.verified === true);
-
-  // function call to create the user graph data
-  graphDataArray = createUserGraphData(verifiedUsers);
 
   // calling the filterGraphData() to filter basing on period
   filteredGraphData = filterGraphData(graphDataArray, period);
@@ -270,7 +250,7 @@ const AdminUserOverviewPage = () => {
                 >
                   <Line type="monotone" dataKey="Value" stroke="#8884d8" />
                   <CartesianGrid stroke="#ccc" />
-                  <XAxis dataKey="Month" />
+                  <XAxis dataKey="month" />
                   <XAxis
                     xAxisId={1}
                     dx={10}
@@ -281,7 +261,7 @@ const AdminUserOverviewPage = () => {
                     }}
                     height={70}
                     interval={12}
-                    dataKey="Year"
+                    dataKey="year"
                     tickLine={false}
                     tick={{ fontSize: 12, angle: 0 }}
                   />
@@ -296,7 +276,7 @@ const AdminUserOverviewPage = () => {
                   />
                   <Area
                     type="monotone"
-                    dataKey="Value"
+                    dataKey="value"
                     stroke="#82ca9d"
                     fill="#82ca9d"
                   />
