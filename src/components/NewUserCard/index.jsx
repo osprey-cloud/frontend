@@ -1,63 +1,71 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./NewUserCard.module.css";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import {
   handleDeleteRequest,
-  handleGetRequest,
 } from "../../apis/apis";
 import Spinner from "../Spinner";
 import axios from "../../axios";
-import tellAge from "../../helpers/ageUtility";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useUserDetails } from "../../hooks/useUserDetails";
 
 const NewUserCard = ({ userID, showFollowBtn = true }) => {
-  const [userDetails, setUserDetails] = useState({});
-  const [sectionLoad, setSectionLoad] = useState(false);
   const [userFollowLoading, setUserFollowLoading] = useState(false);
 
-  const getUserDetails = useCallback(() => {
-    setSectionLoad(true);
-    handleGetRequest(`/users/${userID}`)
-      .then((response) => {
-        setUserDetails(response.data.data.user);
-        setSectionLoad(false);
+  const queryClient=useQueryClient();
+  const {data:details, isLoading}= useUserDetails(userID)
+  const userDetails = details?.data?.data?.user
+
+
+  const unfollowUserMutation=useMutation({
+    mutationFn:()=> handleDeleteRequest(`users/${userDetails.id}/following`, {}),
+    onMutate:()=>{
+      setUserFollowLoading(true);
+    },
+    onSuccess:()=>{
+      queryClient.invalidateQueries({
+        queryKey:["user",userID],
       })
-      .catch((error) => {
-        setSectionLoad(false);
-      });
-  }, [userID]);
-
-  useEffect(() => {
-    getUserDetails();
-  }, [getUserDetails, userFollowLoading]);
-
-  const onFollowClick = async () => {
-    setUserFollowLoading(true);
-    if (userDetails?.requesting_user_follows) {
-      handleDeleteRequest(`users/${userDetails?.id}/following`, {})
-        .then(() => {
-          setSectionLoad(true);
-          setUserFollowLoading(false);
-        })
-        .catch((error) => {
-          setUserFollowLoading(false);
-        });
-    } else {
-      try {
-        const response = await axios.post(`users/${userDetails?.id}/following`);
-        if (response.status === 201) {
-          setSectionLoad(true);
-          setUserFollowLoading(false);
-        }
-      } catch (error) {
-        console.error("Error following user:", error);
+      setTimeout(()=>{
         setUserFollowLoading(false);
-      }
+      },2000);
+    },
+    onError:(error)=>{
+      console("Error unfollowing user", error)
+    }
+  });
+
+  const followUserMutation=useMutation({
+    mutationFn:()=> axios.post(`users/${userDetails.id}/following`, {}),
+    onMutate:()=>{
+      setUserFollowLoading(true);
+    },
+    onSuccess:()=>{
+      queryClient.invalidateQueries({
+        queryKey:["user",userID],
+      })
+      setTimeout(()=>{
+        setUserFollowLoading(false);
+      },2000);
+    },
+    onError:(error)=>{
+      console("Error following user", error)
+    }
+  });
+
+  const onFollowClick = () => {
+    if (userDetails.requesting_user_follows) {
+      setUserFollowLoading(true);
+      unfollowUserMutation.mutate();
+        } else {
+      setUserFollowLoading(false);
+      followUserMutation.mutate();
     }
   };
 
   return (
     <>
-      {sectionLoad ? (
+      {isLoading ? (
         <div className={styles.noActivity}>
           <div className={styles.NoResourcesMessage}>
             <div className={styles.SpinnerWrapper}>

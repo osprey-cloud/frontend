@@ -13,8 +13,6 @@ const RecentActivitySection = () => {
   const user = useSelector((state) => state.user);
   const { data: userRecentActivities, isFetching: isFetchingRecentActivities}=useRecentActivity(1, user?.data?.id);
   const pagination = userRecentActivities?.data?.data?.pagination ||[];
-  const noRecentActivity =
-  userRecentActivities?.data?.user_feed?.data?.activity.length === 0 && !isFetchingRecentActivities;
 
 
   const handlePageChange = (currentPage) => {
@@ -36,7 +34,7 @@ const RecentActivitySection = () => {
         </div>
       ) : (
         <>
-          {noRecentActivity ? (
+          {userRecentActivities === undefined ? (
             <div className={styles.noActivity}>
               <InfoSvg />
               <p className={styles.noActivityMessage}>
@@ -44,14 +42,14 @@ const RecentActivitySection = () => {
               </p>
             </div>
           ) : (
-            userRecentActivities?.data?.user_feed?.data?.activity.map((item, index) => (
+            userRecentActivities?.data?.user_feed?.data?.activity.slice(0,4).map((item, index) => (
               <React.Fragment key={index}>
                 <RecentActivityItem item={item} />
               </React.Fragment>
             ))
           )}
 
-          {!noRecentActivity && pagination?.pages > 1 && (
+          {userRecentActivities !== undefined && pagination?.pages > 1 && (
             <div className="AdminPaginationSection">
               <Pagination
                 total={pagination.pages}
