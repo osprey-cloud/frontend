@@ -67,6 +67,16 @@ const TagCard = ({ id, isModalTag, onClose }) => {
   }
 
   return (
+    <>
+    {isLoading ?(
+      <div className={styles.noActivity}>
+          <div className={styles.NoResourcesMessage}>
+            <div className={styles.SpinnerWrapper}>
+              <Spinner size="small" />
+            </div>
+          </div>
+        </div>
+    ):(
     <div className={styles.card}>
       <div className={styles.cardContent}>
         <div className={styles.tagName}
@@ -122,6 +132,8 @@ const TagCard = ({ id, isModalTag, onClose }) => {
         </div>
       )}
     </div>
+    )}
+    </>
   );
 };
 
