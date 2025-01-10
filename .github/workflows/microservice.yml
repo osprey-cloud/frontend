@@ -3,7 +3,7 @@ name: Microservice deployment
 on:
   push:
     branches:
-      - microservice1
+      - microservice
 
   workflow_dispatch:
 

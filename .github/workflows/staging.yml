@@ -3,7 +3,7 @@ name: Staging deployment
 on:
   push:
     branches:
-      - microservice
+      - staging
 
 jobs:
   build_and_deploy_staging:
