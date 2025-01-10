@@ -505,12 +505,17 @@ tr.TableLoading td {
 }
 
 .ErrorWhite {
+  position: relative;
   color: #fff;
   background-color: #dc3545;
   text-align: center;
   padding: 0.7rem;
+  padding-right: 3rem;
   border-radius: 0.4rem;
   border: 1px solid #ff0000;
+  width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
 }
  */
 

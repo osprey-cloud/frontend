@@ -79,6 +79,8 @@ import TagDetailsPage from "./pages/TagDetailsPage";
 
 import NotebookExperimentPage from "./pages/NotebookExperimentPage";
 
+//import toast for online-offline status
+import { toast } from "react-toastify";
 // Protected route should have token. If not, login.
 const ProtectedRoute = ({ isAllowed, ...props }) =>
   isAllowed ? <Route {...props} /> : <Redirect to="/" />;
@@ -107,6 +109,33 @@ const Routes = () => {
           setIsAdmin(false);
         });
     }
+  }, []);
+
+  //Online-Offline Status
+  const [, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    // Update network status
+    const handleStatusChange = () => {
+      setIsOnline(navigator.onLine);
+
+      //send a toast message
+      navigator.onLine
+        ? toast.success("You are back Online")
+        : toast.error("Offline! Check Internet connection");
+    };
+
+    // Listen to the online status
+    window.addEventListener("online", handleStatusChange);
+
+    // Listen to the offline status
+    window.addEventListener("offline", handleStatusChange);
+
+    // Specify how to clean up after this effect for performance improvment
+    return () => {
+      window.removeEventListener("online", handleStatusChange);
+      window.removeEventListener("offline", handleStatusChange);
+    };
   }, []);
 
   return (
