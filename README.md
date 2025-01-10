@@ -22,7 +22,7 @@ Crane Cloud is an open source multi-cloud software platform for cloud-native app
 
 ## Pull requests
 
-1. Push and open PR against `develop`.
+1. Push and open PR against `staging`.
 2. PR will be reviewed before changes are merged.
 
 **Contribution guide to be published some time in the future.**

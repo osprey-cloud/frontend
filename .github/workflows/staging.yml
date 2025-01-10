@@ -3,7 +3,7 @@ name: Staging deployment
 on:
   push:
     branches:
-      - develop
+      - microservice
 
 jobs:
   build_and_deploy_staging:
@@ -40,7 +40,7 @@ jobs:
           sudo mv ./kubectl /usr/local/bin/kubectl
 
       - name: Login (GCP)
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCLOUD_SERVICE_KEY }}
 
@@ -71,7 +71,6 @@ jobs:
 
       - name: Add Env vars
         env:
-          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL_STAGING }}
           REACT_APP_MIRA_API_URL: ${{ secrets.REACT_APP_MIRA_API_URL }}
           REACT_APP_FLUTTERWAVE_PUBLIC_KEY_TESTING: ${{ secrets.REACT_APP_FLUTTERWAVE_PUBLIC_KEY_TESTING }}
           REACT_APP_GITHUB_CLEINT_ID: ${{ secrets.REACT_APP_GITHUB_CLEINT_ID_STAGING }}
@@ -80,6 +79,11 @@ jobs:
           REACT_APP_DOCKER_EMAIL: ${{ secrets.REACT_APP_DOCKER_EMAIL }}
           REACT_APP_DOCKER_PASSWORD: ${{ secrets.REACT_APP_DOCKER_PASSWORD }}
           REACT_APP_MONITORING_APP: ${{ secrets.REACT_APP_MONITORING_APP_STAGING }}
+          REACT_APP_API_BASE_URL: http://cranecloud-backend
+          REACT_APP_ACTIVITY_LOGS_API_URL: http://activity-logger
+          REACT_APP_MONITORING_API_URL: http://monitoring-api
+          REACT_APP_DATABASE_API_URL: http://database-api
+          REACT_APP_MLOPS_API_URL: http://mlops-api
         run: | 
           chmod +x ./.github/workflows/bin/create_envs.sh
           ./.github/workflows/bin/create_envs.sh
