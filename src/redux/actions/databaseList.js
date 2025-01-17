@@ -27,11 +27,11 @@ const clearProjectDatabases = () => ({
   type: CLEAR_PROJECT_DATABASES,
 });
 
-const getProjectDatabases = () => (dispatch) => {
+const getProjectDatabases = (projectID) => (dispatch) => {
   dispatch(startFetchingDatabases());
 
   return databaseAxios
-    .get("/databases")
+    .get(`/databases?project_id=${projectID}`)
     .then((response) => {
       dispatch(getDatabasesSuccess(response));
     })

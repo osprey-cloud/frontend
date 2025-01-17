@@ -24,15 +24,22 @@ class DatabaseList extends React.Component {
   }
 
   componentDidMount() {
-    const { getProjectDatabases } = this.props;
-    getProjectDatabases();
+    const {
+      getProjectDatabases,
+      match: { params },
+    } = this.props;
+    getProjectDatabases(params.projectID);
   }
 
   componentDidUpdate(prevProps) {
-    const { isCreated, getProjectDatabases } = this.props;
+    const {
+      isCreated,
+      getProjectDatabases,
+      match: { params },
+    } = this.props;
 
     if (isCreated !== prevProps.isCreated) {
-      getProjectDatabases();
+      getProjectDatabases(params.projectID);
       this.callbackCreateComponent();
     }
   }
@@ -59,6 +66,7 @@ class DatabaseList extends React.Component {
     const sortedDbs = [...databases]?.sort((a, b) =>
       b.date_created > a.date_created ? 1 : -1
     );
+    
     return (
       <div>
         {openCreateComponent ? (
@@ -213,6 +221,11 @@ DatabaseList.propTypes = {
   isFetchingDatabases: PropTypes.bool,
   databasesFetched: PropTypes.bool,
   isCreated: PropTypes.bool,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      projectID: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 DatabaseList.defaultProps = {
