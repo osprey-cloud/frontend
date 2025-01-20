@@ -28,14 +28,6 @@ class CreateDatabase extends React.Component {
     this.addNewDatabase = this.addNewDatabase.bind(this);
   }
 
-  // componentDidMount() {
-
-  // }
-
-  // componentDidUpdate(prevProps) {
-
-  // }
-
   handleSelectChange(selected) {
     this.setState({ databaseFlavour: selected.value });
   }
@@ -51,6 +43,7 @@ class CreateDatabase extends React.Component {
       });
     } else {
       const newDBType = {
+        project_id: projectID,
         database_flavour_name: databaseFlavour,
       };
       //createDatabase(newDBType, projectID);
