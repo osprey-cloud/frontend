@@ -3,6 +3,7 @@ import Header from "../Header";
 import InformationBar from "../InformationBar";
 import Spinner from "../Spinner";
 import CreateAdminDB from "./CreateAdminDB";
+import tellAge from "../../helpers/ageUtility";
 import adminGetDatabases from "../../redux/actions/getAdminDatabases";
 // import styles from "./AdminDB.module.css";
 import usePaginator from "../../hooks/usePaginator";
@@ -25,76 +26,41 @@ import { createDatabasesPieChartData } from "../../helpers/databasesPieChartData
 import { createDatabaseGraphData } from "../../helpers/databasesGraphData";
 import { filterGraphData } from "../../helpers/filterGraphData";
 import { retrieveMonthNames } from "../../helpers/monthNames";
-import { handleGetRequest } from "../../apis/apis";
 import Select from "../Select";
 import { getDatabaseFlavors } from "../../helpers/databaseCategories";
 import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
 import { ReactComponent as BackButton } from "../../assets/images/arrow-left.svg";
 import AppFooter from "../appFooter";
+import {
+  useAdminDatabaseList,
+  useAdminDatabaseStats,
+} from "../../hooks/useDatabases";
 
 const AdminDBList = () => {
   const history = useHistory();
-  const [currentPage, handleChangePage] = usePaginator();
-  const [databaseSummary, setDatabaseSummary] = useState([]);
-  const [feedback, setFeedback] = useState("");
+  // const [currentPage, handleChangePage] = usePaginator();
+  // const [feedback, setFeedback] = useState("");
   const [openCreateComponent, setOpenCreateComponent] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [period, setPeriod] = useState("all");
-  const [metadata, setMetaData] = useState({});
-  const [sectionValue, setSectionValue] = useState("all");
+  const [sectionValue, setSectionValue] = useState("");
 
-  const dispatch = useDispatch();
+  const { data: databaseStats, isLoading: isLoadingDatabaseStats } =
+    useAdminDatabaseStats();
+
+  const { data: response, isLoading: isLoadingDatabases } =
+    useAdminDatabaseList(sectionValue);
 
   const COLORS = ["#0088FE", "#0DBC00"];
 
   let graphDataArray = [];
   let filteredGraphData = [];
 
-  const databaseResources = useCallback(
-    () => dispatch(adminGetDatabases(sectionValue, currentPage)),
-    [dispatch, sectionValue, currentPage]
-  );
-  useEffect(() => {
-    getAllDatabases();
-    databaseResources();
-  }, [databaseResources]);
-
-  const getAllDatabases = async () => {
-    setLoading(true);
-
-    try {
-      const response = await handleGetRequest("/databases");
-      if (response.data.data.databases.length > 0) {
-        const totalNumberOfDatabases = response.data.data.pagination.total;
-        handleGetRequest(`/databases?per_page=${totalNumberOfDatabases}`)
-          .then((response) => {
-            if (response.data.data.databases.length > 0) {
-              setDatabaseSummary(response.data.data.databases);
-              setMetaData(response.data.data.metadata);
-              setLoading(false);
-            } else {
-              throw new Error("No databases found");
-            }
-          })
-          .catch(() => {
-            setFeedback("Failed to fetch all databases, please try again");
-          });
-      } else {
-        setFeedback("No databases found");
-      }
-    } catch (error) {
-      setFeedback("Failed to fetch databases, please try again");
-    }
-  };
-
-  const { databases, databasesFetched, isFetchingDatabases, pagination } =
-    useSelector((state) => state.adminDatabasesReducer);
   const { isCreated } = useSelector((state) => state.adminCreateDBReducer);
 
   useEffect(() => {
     callbackCreateComponent();
-    dispatch(adminGetDatabases(sectionValue, currentPage));
-  }, [sectionValue, currentPage, isCreated, dispatch]);
+  }, [isCreated]);
 
   const showCreateComponent = () => {
     setOpenCreateComponent(true);
@@ -104,21 +70,9 @@ const AdminDBList = () => {
     setOpenCreateComponent(false);
   };
 
-  const handlePageChange = (currentPage) => {
-    handleChangePage(currentPage);
-    databaseResources();
-  };
-
-  const sortedDbs = databases.sort((a, b) =>
-    b.date_created > a.date_created ? 1 : -1
-  );
-
-  // these counts will get actual values from data provided by backend
-  const databaseCounts = {
-    total: metadata.total,
-    mysql: metadata.mysql_total,
-    postgres: metadata.postgres_total,
-  };
+  // const sortedDbs = databases.sort((a, b) =>
+  //   b.date_created > a.date_created ? 1 : -1
+  // );
 
   const handleChange = ({ target }) => {
     setPeriod(target.getAttribute("value"));
@@ -129,9 +83,7 @@ const AdminDBList = () => {
     setSectionValue(selectedValue);
   };
 
-  graphDataArray = createDatabaseGraphData(databaseSummary);
-
-  filteredGraphData = filterGraphData(graphDataArray, period);
+  // filteredGraphData = filterGraphData(graphDataArray, period);
 
   const availableFlavors = getDatabaseFlavors();
 
@@ -166,21 +118,35 @@ const AdminDBList = () => {
               <div className="TitleArea">
                 <div className="SectionTitle">Databases Summary</div>
               </div>
-              {loading ? (
+              {isLoadingDatabaseStats || isLoadingDatabases ? (
                 <div className="ResourceSpinnerWrapper">
                   <Spinner size="big" />
                 </div>
-              ) : feedback !== "" ? (
-                <div className="NoResourcesMessage">{feedback}</div>
-              ) : Object.keys(databaseCounts).length > 0 ? (
+              ) : databaseStats.data?.data?.databases?.total_database_count >
+                0 ? (
                 <div className="ResourceClusterContainer">
-                  {Object.keys(databaseCounts).map((countType) => (
-                    <NewResourceCard
-                      key={countType}
-                      title={countType}
-                      count={databaseCounts[countType]}
-                    />
-                  ))}
+                  <NewResourceCard
+                    title={"Total"}
+                    count={
+                      databaseStats.data?.data?.databases?.total_database_count
+                    }
+                  />
+
+                  <NewResourceCard
+                    title={"MySQL"}
+                    count={
+                      databaseStats.data?.data?.databases?.dbs_stats_per_flavour
+                        ?.mysql_db_count
+                    }
+                  />
+
+                  <NewResourceCard
+                    title={"PostgreSQL"}
+                    count={
+                      databaseStats.data?.data?.databases?.dbs_stats_per_flavour
+                        ?.postgres_db_count
+                    }
+                  />
                 </div>
               ) : null}
 
@@ -341,7 +307,7 @@ const AdminDBList = () => {
                       Pie Chart for Database Flavors
                     </span>
                   </div>
-                  {Object.keys(metadata).length === 0 ? (
+                  {isLoadingDatabaseStats ? (
                     <div className="ResourceSpinnerWrapper">
                       <Spinner size="big" />
                     </div>
@@ -350,7 +316,10 @@ const AdminDBList = () => {
                       <div className="ChartColumn">
                         <PieChart width={300} height={300}>
                           <Pie
-                            data={createDatabasesPieChartData(databaseCounts)}
+                            data={createDatabasesPieChartData(
+                              databaseStats.data?.data?.databases
+                                ?.dbs_stats_per_flavour
+                            )}
                             dataKey="value"
                             nameKey="category"
                             cx="50%"
@@ -358,42 +327,46 @@ const AdminDBList = () => {
                             outerRadius={140}
                             paddingAngle={3}
                           >
-                            {createDatabasesPieChartData(databaseCounts).map(
-                              (entry, index) => (
-                                <Cell
-                                  key={`cell-${index}`}
-                                  fill={COLORS[index % COLORS.length]}
-                                />
-                              )
-                            )}
+                            {createDatabasesPieChartData(
+                              databaseStats.data?.data?.databases
+                                ?.dbs_stats_per_flavour
+                            ).map((entry, index) => (
+                              <Cell
+                                key={`cell-${index}`}
+                                fill={COLORS[index % COLORS.length]}
+                              />
+                            ))}
                           </Pie>
                           <Tooltip />
                         </PieChart>
                       </div>
                       <div className="PercentageColumn">
                         <ul className="KeyItems">
-                          {createDatabasesPieChartData(databaseCounts).map(
-                            (entry, index) => (
-                              <>
-                                {" "}
-                                <li key={`list-item-${index}`}>
-                                  <span
-                                    style={{
-                                      color: COLORS[index % COLORS.length],
-                                    }}
-                                  >
-                                    {entry.category}:
-                                  </span>{" "}
-                                  {(
-                                    (entry.value / databaseCounts.total) *
-                                    100
-                                  ).toFixed(0)}
-                                  %
-                                </li>
-                                <hr style={{ width: "100%" }} />
-                              </>
-                            )
-                          )}
+                          {createDatabasesPieChartData(
+                            databaseStats.data?.data?.databases
+                              ?.dbs_stats_per_flavour
+                          ).map((entry, index) => (
+                            <>
+                              {" "}
+                              <li key={`list-item-${index}`}>
+                                <span
+                                  style={{
+                                    color: COLORS[index % COLORS.length],
+                                  }}
+                                >
+                                  {entry.category}:
+                                </span>{" "}
+                                {(
+                                  (entry.value /
+                                    databaseStats.data.data.databases
+                                      .total_database_count) *
+                                  100
+                                ).toFixed(0)}
+                                %
+                              </li>
+                              <hr style={{ width: "100%" }} />
+                            </>
+                          ))}
                         </ul>
                       </div>
                     </div>
@@ -418,7 +391,7 @@ const AdminDBList = () => {
 
               <div
                 className={
-                  isFetchingDatabases
+                  isLoadingDatabases
                     ? "ResourcesTable LoadingResourcesTable"
                     : "ResourcesTable"
                 }
@@ -432,7 +405,7 @@ const AdminDBList = () => {
                       <th>Age</th>
                     </tr>
                   </thead>
-                  {isFetchingDatabases ? (
+                  {isLoadingDatabases ? (
                     <tbody>
                       <tr className="TableLoading">
                         <td className="TableTdSpinner">
@@ -444,39 +417,38 @@ const AdminDBList = () => {
                     </tbody>
                   ) : (
                     <tbody>
-                      {databasesFetched &&
-                        sortedDbs !== undefined &&
-                        sortedDbs?.map((database) => (
-                          <tr
-                            key={sortedDbs.indexOf(database)}
-                            onClick={() => {
-                              history.push(`/databases/${database?.id}`);
-                            }}
-                          >
-                            <td>{database?.database_flavour_name}</td>
-                            <td>{database?.name}</td>
-                            <td>{database?.host}</td>
-                            <td>{database?.age}</td>
-                          </tr>
-                        ))}
+                      {response?.data?.data?.databases?.map((database) => (
+                        <tr
+                          key={database?.id}
+                          onClick={() => {
+                            history.push(`/databases/${database?.id}`);
+                          }}
+                        >
+                          <td>{database?.database_flavour_name}</td>
+                          <td>{database?.name}</td>
+                          <td>{database?.host}</td>
+                          <td>{tellAge(database?.date_created)}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   )}
                 </table>
-                {databasesFetched && databases.length === 0 && (
+                {response?.data?.data?.databases?.length === 0 && (
                   <div className="AdminNoResourcesMessage">
                     <p>No Databases Available</p>
                   </div>
                 )}
-                {!isFetchingDatabases && !databasesFetched && (
-                  <div className="AdminNoResourcesMessage">
-                    <p>
-                      Oops! Something went wrong! Failed to retrieve Available
-                      Databases.
-                    </p>
-                  </div>
-                )}
+                {!isLoadingDatabases &&
+                  response?.data?.data?.databases?.length === 0 && (
+                    <div className="AdminNoResourcesMessage">
+                      <p>
+                        Oops! Something went wrong! Failed to retrieve Available
+                        Databases.
+                      </p>
+                    </div>
+                  )}
               </div>
-              {pagination?.pages > 1 && (
+              {/* {pagination?.pages > 1 && (
                 <div className="AdminPaginationSection">
                   <Pagination
                     total={pagination.pages}
@@ -484,7 +456,7 @@ const AdminDBList = () => {
                     onPageChange={handlePageChange}
                   />
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </>
