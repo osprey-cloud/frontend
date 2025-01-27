@@ -162,7 +162,7 @@ const ClusterPage = ({
             <div className={styles.columnCardSection}>
               <div className={styles.CardHeader}>Databases</div>
               <div className={styles.ResourceDigit}>
-                {databaseStats.data.data.databases.total_database_count}
+                {databaseStats?.data?.data?.databases?.total_database_count}
               </div>
             </div>
             <div className={styles.rowCardSection}>
@@ -170,8 +170,8 @@ const ClusterPage = ({
                 <div className={styles.innerCardHeader}>MySql</div>
                 <div className={styles.rowResourceDigit}>
                   {
-                    databaseStats.data.data.databases.dbs_stats_per_flavour
-                      .mysql_db_count
+                    databaseStats?.data?.data?.databases?.dbs_stats_per_flavour
+                      ?.mysql_db_count
                   }
                 </div>
               </div>
@@ -181,8 +181,8 @@ const ClusterPage = ({
                   className={`${styles.rowResourceDigit} ${styles.rightTextAlign}`}
                 >
                   {
-                    databaseStats.data.data.databases.dbs_stats_per_flavour
-                      .postgres_db_count
+                    databaseStats?.data?.data?.databases?.dbs_stats_per_flavour
+                      ?.postgres_db_count
                   }
                 </div>
               </div>

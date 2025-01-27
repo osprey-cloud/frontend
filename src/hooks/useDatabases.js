@@ -24,18 +24,32 @@ export const useAdminDatabaseSeries = () => {
 };
 
 // get all databases for admin
-export const useAdminDatabaseList = (category = "") => {
-  console.log("innnn");
-  let link = `/databases`;
+export const useDatabaseList = (category = "", page, project_id = "") => {
+  let link = `/databases?page=${page}`;
+
   if (category) {
-    link += `?database_flavour_name=${category}`;
+    link += `&database_flavour_name=${category}`;
   }
-  console.log(link);
+
+  if (project_id) {
+    link += `&project_id=${project_id}`;
+  }
   return useQuery({
     queryFn: () => databaseAxios.get(link),
-    queryKey: ["adminDatabaseList", category],
+    queryKey: ["adminDatabaseList", category, page, project_id],
     meta: {
       errorMessage: "Failed to fetch all databases",
+    },
+  });
+};
+
+// get database details
+export const useDatabaseDetails = (id) => {
+  return useQuery({
+    queryFn: () => databaseAxios.get(`/databases/${id}`),
+    queryKey: ["databaseDetails", id],
+    meta: {
+      errorMessage: "Failed to fetch database details",
     },
   });
 };

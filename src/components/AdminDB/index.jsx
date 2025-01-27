@@ -1,14 +1,12 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Header from "../Header";
 import InformationBar from "../InformationBar";
 import Spinner from "../Spinner";
 import CreateAdminDB from "./CreateAdminDB";
-import tellAge from "../../helpers/ageUtility";
-import adminGetDatabases from "../../redux/actions/getAdminDatabases";
-// import styles from "./AdminDB.module.css";
+import { getRelativeTime } from "../../helpers/ageUtility";
 import usePaginator from "../../hooks/usePaginator";
 import Pagination from "../../components/Pagination";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import NewResourceCard from "../NewResourceCard";
 import {
   Line,
@@ -23,7 +21,6 @@ import {
   Cell,
 } from "recharts";
 import { createDatabasesPieChartData } from "../../helpers/databasesPieChartData";
-import { createDatabaseGraphData } from "../../helpers/databasesGraphData";
 import { filterGraphData } from "../../helpers/filterGraphData";
 import { retrieveMonthNames } from "../../helpers/monthNames";
 import Select from "../Select";
@@ -32,28 +29,33 @@ import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
 import { ReactComponent as BackButton } from "../../assets/images/arrow-left.svg";
 import AppFooter from "../appFooter";
 import {
-  useAdminDatabaseList,
+  useAdminDatabaseSeries,
   useAdminDatabaseStats,
+  useDatabaseList,
 } from "../../hooks/useDatabases";
 
 const AdminDBList = () => {
   const history = useHistory();
-  // const [currentPage, handleChangePage] = usePaginator();
-  // const [feedback, setFeedback] = useState("");
+  const [currentPage, handleChangePage] = usePaginator();
   const [openCreateComponent, setOpenCreateComponent] = useState(false);
-  // const [loading, setLoading] = useState(false);
   const [period, setPeriod] = useState("all");
   const [sectionValue, setSectionValue] = useState("");
+  const [currentPaginationPage, setCurrentPaginationPage] = useState(1);
 
   const { data: databaseStats, isLoading: isLoadingDatabaseStats } =
     useAdminDatabaseStats();
 
-  const { data: response, isLoading: isLoadingDatabases } =
-    useAdminDatabaseList(sectionValue);
+  const { data: series, isLoading: isLoadingDatabaseGraph } =
+    useAdminDatabaseSeries();
+
+  const { data: response, isLoading: isLoadingDatabases } = useDatabaseList(
+    sectionValue,
+    currentPaginationPage,
+    ""
+  );
 
   const COLORS = ["#0088FE", "#0DBC00"];
 
-  let graphDataArray = [];
   let filteredGraphData = [];
 
   const { isCreated } = useSelector((state) => state.adminCreateDBReducer);
@@ -70,9 +72,9 @@ const AdminDBList = () => {
     setOpenCreateComponent(false);
   };
 
-  // const sortedDbs = databases.sort((a, b) =>
-  //   b.date_created > a.date_created ? 1 : -1
-  // );
+  const sortedDbs = response?.data?.data?.databases.sort((a, b) =>
+    b.date_created > a.date_created ? 1 : -1
+  );
 
   const handleChange = ({ target }) => {
     setPeriod(target.getAttribute("value"));
@@ -83,9 +85,21 @@ const AdminDBList = () => {
     setSectionValue(selectedValue);
   };
 
-  // filteredGraphData = filterGraphData(graphDataArray, period);
+  const graphData = series?.data?.data?.graph_data;
+  filteredGraphData = useMemo(() => {
+    if (isLoadingDatabaseGraph || !graphData) {
+      return [];
+    }
+
+    return filterGraphData(graphData, period);
+  }, [isLoadingDatabaseGraph, graphData, period]);
 
   const availableFlavors = getDatabaseFlavors();
+
+  const handlePageChange = (currentPage) => {
+    handleChangePage(currentPage);
+    setCurrentPaginationPage(currentPage);
+  };
 
   return (
     <div className="APage">
@@ -118,7 +132,9 @@ const AdminDBList = () => {
               <div className="TitleArea">
                 <div className="SectionTitle">Databases Summary</div>
               </div>
-              {isLoadingDatabaseStats || isLoadingDatabases ? (
+              {isLoadingDatabaseStats ||
+              isLoadingDatabases ||
+              isLoadingDatabaseGraph ? (
                 <div className="ResourceSpinnerWrapper">
                   <Spinner size="big" />
                 </div>
@@ -232,7 +248,7 @@ const AdminDBList = () => {
                       </div>
                     </span>
                   </div>
-                  {graphDataArray.length > 0 ? (
+                  {series?.data?.data?.graph_data?.length > 0 ? (
                     <AreaChart
                       width={600}
                       height={350}
@@ -244,12 +260,14 @@ const AdminDBList = () => {
                       }}
                       syncId="anyId"
                       data={
-                        period !== "all" ? filteredGraphData : graphDataArray
+                        period !== "all"
+                          ? filteredGraphData
+                          : series?.data?.data?.graph_data
                       }
                     >
                       <Line type="monotone" dataKey="Value" stroke="#8884d8" />
                       <CartesianGrid stroke="#ccc" />
-                      <XAxis dataKey="Month" />
+                      <XAxis dataKey="month" />
                       <XAxis
                         xAxisId={1}
                         dx={10}
@@ -260,7 +278,7 @@ const AdminDBList = () => {
                         }}
                         height={70}
                         interval={12}
-                        dataKey="Year"
+                        dataKey="year"
                         tickLine={false}
                         tick={{ fontSize: 12, angle: 0 }}
                       />
@@ -275,7 +293,7 @@ const AdminDBList = () => {
                       />
                       <Area
                         type="monotone"
-                        dataKey="Value"
+                        dataKey="value"
                         stroke="#82ca9d"
                         fill="#82ca9d"
                       />
@@ -283,7 +301,7 @@ const AdminDBList = () => {
                         labelFormatter={(value) => {
                           const monthNames = retrieveMonthNames();
                           const month = parseInt(value) - 1;
-                          return monthNames[month].name;
+                          return monthNames[month]?.name;
                         }}
                         formatter={(value) => {
                           if (value === 1) {
@@ -417,7 +435,7 @@ const AdminDBList = () => {
                     </tbody>
                   ) : (
                     <tbody>
-                      {response?.data?.data?.databases?.map((database) => (
+                      {sortedDbs?.map((database) => (
                         <tr
                           key={database?.id}
                           onClick={() => {
@@ -427,7 +445,7 @@ const AdminDBList = () => {
                           <td>{database?.database_flavour_name}</td>
                           <td>{database?.name}</td>
                           <td>{database?.host}</td>
-                          <td>{tellAge(database?.date_created)}</td>
+                          <td>{getRelativeTime(database?.date_created)}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -448,15 +466,15 @@ const AdminDBList = () => {
                     </div>
                   )}
               </div>
-              {/* {pagination?.pages > 1 && (
+              {response?.data?.data?.pagination?.pages > 1 && (
                 <div className="AdminPaginationSection">
                   <Pagination
-                    total={pagination.pages}
+                    total={response?.data?.data?.pagination?.pages}
                     current={currentPage}
                     onPageChange={handlePageChange}
                   />
                 </div>
-              )} */}
+              )}
             </div>
           </div>
         </>
