@@ -1,10 +1,10 @@
 name: Production Deployment
 
 on:
-  push:
-    branches:
-      - master
-      - "release/*"
+  release:
+    types:
+      - released
+      - prereleased
 
 jobs:
   build_and_deploy_production:
@@ -40,7 +40,7 @@ jobs:
           sudo mv ./kubectl /usr/local/bin/kubectl
 
       - name: Login (GCP)
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCLOUD_SERVICE_KEY }}
 
