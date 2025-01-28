@@ -15,6 +15,7 @@ import Feedback from "../../components/Feedback";
 import styles from "./ClusterPage.module.css";
 import getClustersList from "../../redux/actions/clusters";
 import { handleGetRequest } from "../../apis/apis.js";
+import { useAdminDatabaseStats } from "../../hooks/useDatabases.js";
 
 const ClusterPage = ({
   creatingCluster,
@@ -34,6 +35,9 @@ const ClusterPage = ({
   const [prometheus_url, setPrometheus_url] = useState("");
   const [summary, setSummary] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const { data: databaseStats, isLoading: isLoadingDatabaseStats } =
+    useAdminDatabaseStats();
 
   useEffect(() => {
     getClustersList();
@@ -78,7 +82,7 @@ const ClusterPage = ({
       addCluster(cluster);
     }
   };
-
+  
   return (
     <div className={styles.Page}>
       <div className="TopRow">
@@ -158,14 +162,17 @@ const ClusterPage = ({
             <div className={styles.columnCardSection}>
               <div className={styles.CardHeader}>Databases</div>
               <div className={styles.ResourceDigit}>
-                {summary?.Databases?.total_count}
+                {databaseStats?.data?.data?.databases?.total_database_count}
               </div>
             </div>
             <div className={styles.rowCardSection}>
               <div className={styles.columnCardSection}>
                 <div className={styles.innerCardHeader}>MySql</div>
                 <div className={styles.rowResourceDigit}>
-                  {summary?.Databases?.mysql}
+                  {
+                    databaseStats?.data?.data?.databases?.dbs_stats_per_flavour
+                      ?.mysql_db_count
+                  }
                 </div>
               </div>
               <div className={styles.columnCardSection}>
@@ -173,7 +180,10 @@ const ClusterPage = ({
                 <div
                   className={`${styles.rowResourceDigit} ${styles.rightTextAlign}`}
                 >
-                  {summary?.Databases?.postgres}
+                  {
+                    databaseStats?.data?.data?.databases?.dbs_stats_per_flavour
+                      ?.postgres_db_count
+                  }
                 </div>
               </div>
             </div>
@@ -203,7 +213,7 @@ const ClusterPage = ({
             </div>
           </Link>
         </div>
-      ) : loading ? (
+      ) : loading || isLoadingDatabaseStats ? (
         <div className={styles.LoadingArea}>
           <Spinner size="big" />
         </div>

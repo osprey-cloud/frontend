@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`test cluster page match the component snapshot for cluster page 1`] = `ShallowWrapper {}`;

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { handleGetRequest } from "../../apis/apis";
 import Header from "../Header";
@@ -12,44 +12,33 @@ import "./AdminDatabaseDetails.css";
 import Spinner from "../Spinner";
 import AppFooter from "../appFooter";
 import SettingsActionRow from "../SettingsActionRow";
+import { useDatabaseDetails } from "../../hooks/useDatabases";
+import { useQuery } from "@tanstack/react-query";
 
 const AdminDatabaseDetails = () => {
   const { databaseID } = useParams();
-  const [loading, setLoading] = useState(false);
-  const [details, setDetails] = useState([]);
   const [projectName, setProjectName] = useState("");
   const [error, setError] = useState("");
 
-  const fetchDatabaseDetails = useCallback(() => {
-    setLoading(true);
-    handleGetRequest(`/databases/${databaseID}`)
-      .then((response) => {
-        setDetails(response.data.data.database);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError("Failed to fetch database detail please refresh");
-        setLoading(false);
-      });
-  }, [databaseID]);
+  const { data: response, isLoading: isLoadingDatabaseDetails } =
+    useDatabaseDetails(databaseID);
 
-  const fetchProjectSummary = useCallback(() => {
-    setLoading(true);
-    handleGetRequest(`/projects/${details?.project_id}`)
-      .then((response) => {
+  const details = useMemo(
+    () => response?.data?.data?.database ?? null,
+    [response]
+  );
+
+  const { isLoading: isLoadingProjectDetails } = useQuery({
+    queryKey: ["project", details?.project_id],
+    queryFn: () =>
+      handleGetRequest(`/projects/${details?.project_id}`).then((response) => {
         setProjectName(response.data.data.project.name);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError("Failed to fetch project detail please refresh");
-        setLoading(false);
-      });
-  }, [details?.project_id]);
-
-  useEffect(() => {
-    fetchProjectSummary();
-    fetchDatabaseDetails();
-  }, [fetchDatabaseDetails, fetchProjectSummary]);
+      }),
+    enabled: !!details?.project_id,
+    onError: () => {
+      setError("Failed to fetch project detail please refresh");
+    },
+  });
 
   return (
     <div className="MainPage">
@@ -74,7 +63,9 @@ const AdminDatabaseDetails = () => {
           </div>
 
           <div className="LeftAlignContainer">
-            {projectName === "" ? (
+            {isLoadingProjectDetails ||
+            isLoadingDatabaseDetails ||
+            projectName === "" ? (
               <div className="ResourceSpinnerWrapper">
                 <Spinner size="big" />
               </div>
@@ -100,13 +91,6 @@ const AdminDatabaseDetails = () => {
                                     <div className="AdminProfileName">
                                       {details?.name}
                                     </div>
-                                    {details?.db_status === true && (
-                                      <div
-                                        className={userProfleStyles.BetaUserDiv}
-                                      >
-                                        Active
-                                      </div>
-                                    )}
                                   </div>
                                   <div
                                     className={userProfleStyles.IdentityEmail}

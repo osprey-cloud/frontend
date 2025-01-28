@@ -24,7 +24,7 @@ import SettingsModal from "../../components/SettingsModal/index.jsx";
 import DisableModalContent from "../../components/DisableModalContent/index.jsx";
 import styles from "../AppMetricsPage/AppMetricsPage.module.css";
 import Tooltip from "../../components/Tooltip/index.js";
-import tellAge from "../../helpers/ageUtility.js";
+import { getRelativeTime } from "../../helpers/ageUtility.js";
 import { databaseAxios } from "../../axios.js";
 
 class DBSettingsPage extends React.Component {
@@ -675,7 +675,7 @@ class DBSettingsPage extends React.Component {
                           Date Created
                         </div>
                         <div className={styles.InnerContentEnd}>
-                          {tellAge(currentDB?.date_created)}
+                          {getRelativeTime(currentDB?.date_created)}
                         </div>
                       </div>
                     </div>
