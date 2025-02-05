@@ -1,4 +1,4 @@
-import axios from "../../axios";
+import {userActivityLoggerAxios} from "../../axios";
 import {
   GETTING_USER_RECENT_ACTIVITIES,
   USER_RECENT_ACTIVITIES_SUCCESS,
@@ -32,7 +32,7 @@ const getUserRecentActivities = (userID, currentPage, pageSize=10) => async (dis
     link = `/activity_feed`;
   }
   try {
-    const response = await axios.get(link);
+    const response = await userActivityLoggerAxios.get(link);
     dispatch(userRecentActivitiesSuccess(response.data.user_feed));
   } catch (error) {
     dispatch(userRecentActivitiesFailed(error));

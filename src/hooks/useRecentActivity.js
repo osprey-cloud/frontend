@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import api from "./../axios";
+import {userActivityLoggerAxios} from "./../axios";
 
 export const useRecentActivity = (page, userID) => {
   let link;
@@ -10,7 +10,7 @@ export const useRecentActivity = (page, userID) => {
   }
 
   return useQuery({
-    queryFn: ()=> api.get(link),
+    queryFn: ()=> userActivityLoggerAxios.get(link),
     queryKey: ["userRecentActivities", page,userID], 
     enabled: !!userID, 
     meta: {
